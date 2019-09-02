@@ -5,7 +5,7 @@
     "author": "Kody King <kody.j.king@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "dev": "yarn install && yarn build",
+        "dev": "yarn install && yarn build && yarn link",
         "build": "tsc",
         "watch": "tsc -w",
         "test": "ava --watch --verbose"
