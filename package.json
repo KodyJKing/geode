@@ -1,0 +1,17 @@
+{
+    "name": "geode",
+    "version": "0.0.0",
+    "repository": "",
+    "author": "Kody King <kody.j.king@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "dev": "yarn install && yarn build",
+        "build": "tsc",
+        "watch": "tsc -w",
+        "test": "ava --watch --verbose"
+    },
+    "private": true,
+    "devDependencies": {
+        "ava": "^2.2.0"
+    }
+}
