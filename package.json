@@ -2,6 +2,7 @@
     "name": "geode",
     "version": "0.0.0",
     "repository": "",
+    "main": "lib/index.js",
     "author": "Kody King <kody.j.king@gmail.com>",
     "license": "MIT",
     "scripts": {
