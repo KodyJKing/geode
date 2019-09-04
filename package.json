@@ -1,12 +1,14 @@
 {
     "name": "geode",
     "version": "0.0.0",
-    "repository": "",
+    "repository": "https://github.com/KodyJKing/geode",
     "main": "lib/index.js",
     "author": "Kody King <kody.j.king@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "dev": "yarn install && yarn build && yarn link",
+        "dev": "yarn install && yarn build && yarn createlink",
+        "createlink": "yarn copypackagejson && cd lib && yarn link",
+        "copypackagejson": "cp package.json lib/package.json",
         "build": "tsc",
         "watch": "tsc -w",
         "test": "ava --watch --verbose"
