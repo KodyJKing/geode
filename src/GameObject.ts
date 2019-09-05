@@ -6,7 +6,6 @@ export default class GameObject {
     position: Vector = vector( 0, 0 )
     width: number = 0
     height: number = 0
-    sprite?: Sprite
 
     get dimensions() { return vector( this.width, this.height ) }
 
