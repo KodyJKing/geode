@@ -6,8 +6,9 @@
     "author": "Kody King <kody.j.king@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "dev": "yarn link liberate && yarn install && yarn build && yarn createLink",
-        "createLink": "cp package.json lib/package.json && cd lib && yarn link",
+        "dev": "yarn install",
+        "postinstall": "yarn build && yarn linklib",
+        "linklib": "cp package.json lib/package.json && cd lib && yarn link",
         "build": "liberate build && tsc",
         "watch": "tsc -w",
         "watchall": "node watchall.js",
