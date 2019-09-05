@@ -8,7 +8,7 @@
     "scripts": {
         "dev": "yarn install",
         "postinstall": "yarn build",
-        "linklib": "cp package.json lib/package.json && cd lib && yarn link",
+        "packagelib": "cp package.json lib/package.json",
         "build": "liberate build && tsc",
         "watch": "tsc -w",
         "watchall": "node watchall.js",
