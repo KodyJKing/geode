@@ -16,7 +16,7 @@
     },
     "private": true,
     "devDependencies": {
-        "ava": "^2.2.0",
+        "ava": "^2.2.0"
     },
     "dependencies": {
         "liberate": "https://github.com/KodyJKing/liberate.git"
