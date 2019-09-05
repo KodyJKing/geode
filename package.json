@@ -6,15 +6,16 @@
     "author": "Kody King <kody.j.king@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "dev": "yarn install && yarn build && yarn link",
-        "createlink": "yarn copypackagejson && cd lib && yarn link",
-        "copypackagejson": "cp package.json lib/package.json",
-        "build": "tsc",
+        "dev": "yarn link liberate && yarn install && yarn build && yarn createLink",
+        "createLink": "cp package.json lib/package.json && cd lib && yarn link",
+        "build": "liberate build && tsc",
         "watch": "tsc -w",
+        "watchall": "node watchall.js",
         "test": "ava --watch --verbose"
     },
     "private": true,
     "devDependencies": {
-        "ava": "^2.2.0"
+        "ava": "^2.2.0",
+        "liberate": "https://github.com/KodyJKing/liberate.git"
     }
 }
