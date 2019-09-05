@@ -6,7 +6,7 @@
     "author": "Kody King <kody.j.king@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "dev": "yarn install",
+        "dev": "yarn install && yarn link",
         "postinstall": "yarn build",
         "packagelib": "cp package.json lib/package.json",
         "build": "liberate build && tsc",
