@@ -1,4 +1,5 @@
 import Vector from "../math/Vector";
+import Transform from "../math/Transform";
 
 export default class Canvas {
 
@@ -18,6 +19,10 @@ export default class Canvas {
     static resize( w, h ) {
         Canvas.canvas.width = w
         Canvas.canvas.height = h
+    }
+
+    static get dimensions() {
+        return new Vector( Canvas.canvas.width, Canvas.canvas.height )
     }
 
     static fitWindow() {
@@ -122,6 +127,31 @@ export default class Canvas {
     static scale( x, y ) {
         Canvas.context.scale( x, y )
         return Canvas
+    }
+
+    static transform( t: Transform ) {
+        let { x, y } = t.position
+        let { x: sx, y: sy } = t.scale
+        let { x: cx, y: cy } = t.center
+        Canvas.translate( x, y )
+            .rotate( t.rotation )
+            .scale( sx, sy )
+            .translate( -cx, -cy )
+        if ( t.parent )
+            this.transform( t.parent )
+
+    }
+
+    static inverseTransform( t: Transform ) {
+        let { x, y } = t.position
+        let { x: sx, y: sy } = t.scale
+        let { x: cx, y: cy } = t.center
+        if ( t.parent )
+            this.inverseTransform( t.parent )
+        Canvas.translate( cx, cy )
+            .scale( 1 / sx, 1 / sy )
+            .rotate( - t.rotation )
+            .translate( -x, -y )
     }
 
     static vtext( text, p: Vector, width, font = "50px pixel" ) { Canvas.text( text, p.x, p.y, width, font ); return Canvas }
