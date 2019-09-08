@@ -1,6 +1,6 @@
-import Vector, { vector } from "./math/Vector";
+import Vector, { vector } from "../math/Vector";
 
-import { boxContains, boxOverlaps } from "./collision/collision";
+import { boxContains, boxOverlaps } from "../collision/collision";
 
 export default class GameObject {
 

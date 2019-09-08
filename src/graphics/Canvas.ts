@@ -6,6 +6,9 @@ export default class Canvas {
     static canvas: HTMLCanvasElement
     static context: CanvasRenderingContext2D
 
+    static width = window.innerWidth
+    static height = window.innerHeight
+
     private static _imageSource = {
         x: 0, y: 0,
         w: 0, h: 0
@@ -16,17 +19,26 @@ export default class Canvas {
         Canvas.context = Canvas.canvas.getContext( "2d" ) as CanvasRenderingContext2D
     }
 
-    static resize( w, h ) {
-        Canvas.canvas.width = w
-        Canvas.canvas.height = h
+    static resize( w, h, pixelDensity = 1 ) {
+        Canvas.width = w
+        Canvas.height = h
+        Canvas.canvas.style.width = w + "px"
+        Canvas.canvas.style.height = h + "px"
+        Canvas.canvas.width = w * pixelDensity
+        Canvas.canvas.height = h * pixelDensity
+        Canvas.scale( pixelDensity, pixelDensity )
     }
 
     static get dimensions() {
-        return new Vector( Canvas.canvas.width, Canvas.canvas.height )
+        return new Vector( Canvas.width, Canvas.height )
     }
 
-    static fitWindow() {
-        Canvas.resize( innerWidth, innerHeight )
+    static get center() {
+        return Canvas.dimensions.half
+    }
+
+    static fitWindow( pixelDensity = 1 ) {
+        Canvas.resize( innerWidth, innerHeight, pixelDensity )
     }
 
     static background( style ) {
@@ -133,25 +145,24 @@ export default class Canvas {
         let { x, y } = t.position
         let { x: sx, y: sy } = t.scale
         let { x: cx, y: cy } = t.center
+        if ( t.parent )
+            this.transform( t.parent )
         Canvas.translate( x, y )
             .rotate( t.rotation )
             .scale( sx, sy )
             .translate( -cx, -cy )
-        if ( t.parent )
-            this.transform( t.parent )
-
     }
 
     static inverseTransform( t: Transform ) {
         let { x, y } = t.position
         let { x: sx, y: sy } = t.scale
         let { x: cx, y: cy } = t.center
-        if ( t.parent )
-            this.inverseTransform( t.parent )
         Canvas.translate( cx, cy )
             .scale( 1 / sx, 1 / sy )
             .rotate( - t.rotation )
             .translate( -x, -y )
+        if ( t.parent )
+            this.inverseTransform( t.parent )
     }
 
     static vtext( text, p: Vector, width, font = "50px pixel" ) { Canvas.text( text, p.x, p.y, width, font ); return Canvas }
