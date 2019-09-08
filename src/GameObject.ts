@@ -1,6 +1,7 @@
-import Vector, { vector } from "./Vector";
-import Sprite from "./Sprite";
-import { boxContains, boxOverlaps } from "./boundingBoxUtils";
+import Vector, { vector } from "./math/Vector";
+
+import { boxContains, boxOverlaps } from "./collision/collision";
+
 export default class GameObject {
 
     position: Vector = vector( 0, 0 )

@@ -1,5 +1,5 @@
-import Vector, { vector } from "./Vector";
-import Canvas from "./Canvas";
+import Vector, { vector } from "./math/Vector";
+import Canvas from "./graphics/Canvas";
 
 window.addEventListener( "mousemove", e => {
     let rect = Canvas.canvas.getBoundingClientRect()

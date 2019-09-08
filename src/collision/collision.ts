@@ -1,6 +1,5 @@
-import { overlaps, contains } from "./common";
 import IBoundingBox from "./IBoundingBox";
-import Vector from "./Vector";
+import Vector from "../math/Vector";
 
 const left = ( b: IBoundingBox ) => b.position.x
 const right = ( b: IBoundingBox ) => b.position.x + b.width
@@ -23,4 +22,12 @@ export function boxOverlaps( b0: IBoundingBox, b1: IBoundingBox ) {
         top( b1 ), bottom( b1 )
     )
     return xOverlaps && yOverlaps
+}
+
+export function contains( a, b, x ) {
+    return x > Math.min( a, b ) && x < Math.max( a, b )
+}
+
+export function overlaps( a0, a1, b0, b1 ) {
+    return contains( a0, a1, b0 ) || contains( a0, a1, b1 )
 }
