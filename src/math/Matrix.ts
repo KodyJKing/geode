@@ -37,8 +37,8 @@ export default class Matrix {
 
     static translation( x = 0, y = 0 ) {
         return new Matrix(
-            0, 0,
-            0, 0,
+            1, 0,
+            0, 1,
             x, y
         )
     }
