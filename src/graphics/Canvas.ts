@@ -177,7 +177,7 @@ export default class Canvas {
             .scale( 1 / sx, 1 / sy )
             .rotate( - t.rotation )
             .translate( -x, -y )
-        if ( deep && t.parent )
+        if ( t.parent )
             this.inverseTransform( t.parent )
     }
 
