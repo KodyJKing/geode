@@ -1,18 +1,28 @@
 import Vector, { vector } from "../math/Vector";
 
 import { boxContains, boxOverlaps } from "../collision/collision";
+import Transform from "../math/Transform";
+import Scene from "./Scene";
 
 export default class GameObject {
 
-    position: Vector = vector( 0, 0 )
+    scene?: Scene
+    sceneIndex = 0
+    layer: number = 0
+
+    transform: Transform = new Transform()
+
     width: number = 0
     height: number = 0
 
-    get dimensions() { return vector( this.width, this.height ) }
+    get position() { return this.transform.position }
+    set position( value: Vector ) { this.transform.position = value }
 
-    get center() {
-        return this.position.add( this.dimensions.half )
-    }
+    get rotation() { return this.transform.rotation }
+    set rotation( value: number ) { this.transform.rotation = value }
+
+    get dimensions() { return vector( this.width, this.height ) }
+    get center() { return this.position.add( this.dimensions.half ) }
 
     constructor( position: Vector, width, height ) {
         this.position = position
@@ -22,4 +32,8 @@ export default class GameObject {
 
     contains( p: Vector ) { return boxContains( this, p ) }
     overlaps( other: GameObject ) { return boxOverlaps( this, other ) }
+
+    onRender() { }
+    onUpdate() { }
+
 }

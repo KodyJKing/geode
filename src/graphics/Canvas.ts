@@ -153,7 +153,9 @@ export default class Canvas {
         return Canvas
     }
 
-    static transform( t: Transform ) {
+    static transform( t: Transform, until?: Transform ) {
+        if ( t == until )
+            return
         let { x, y } = t.position
         let { x: sx, y: sy } = t.scale
         let { x: cx, y: cy } = t.center
@@ -165,7 +167,9 @@ export default class Canvas {
             .translate( -cx, -cy )
     }
 
-    static inverseTransform( t: Transform ) {
+    static inverseTransform( t: Transform, until?: Transform ) {
+        if ( t == until )
+            return
         let { x, y } = t.position
         let { x: sx, y: sy } = t.scale
         let { x: cx, y: cy } = t.center
@@ -173,7 +177,7 @@ export default class Canvas {
             .scale( 1 / sx, 1 / sy )
             .rotate( - t.rotation )
             .translate( -x, -y )
-        if ( t.parent )
+        if ( deep && t.parent )
             this.inverseTransform( t.parent )
     }
 
