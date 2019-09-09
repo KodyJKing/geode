@@ -1,5 +1,6 @@
 import Vector from "../math/Vector";
 import Transform from "../math/Transform";
+import Color from "./color";
 
 export default class Canvas {
 
@@ -86,13 +87,13 @@ export default class Canvas {
         return Canvas
     }
 
-    static strokeStyle( style ) {
-        Canvas.context.strokeStyle = style
+    static strokeStyle( style: string | Color ) {
+        Canvas.context.strokeStyle = style.toString()
         return Canvas
     }
 
-    static fillStyle( style ) {
-        Canvas.context.fillStyle = style
+    static fillStyle( style: string | Color ) {
+        Canvas.context.fillStyle = style.toString()
         return Canvas
     }
 
