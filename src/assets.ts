@@ -1,3 +1,5 @@
+import { audioInstance } from "./audio";
+
 const cache = {}
 export function getAsset( name: string, extension: string, fromPath: ( string ) => any ) {
     let path = "/assets/" + name + "." + extension
@@ -18,4 +20,8 @@ export function getImage( name: string, extension = "png" ) {
 
 export function getAudio( name: string, extension = "mp3" ) {
     return getAsset( name, extension, path => new Audio( path ) ) as HTMLAudioElement
+}
+
+export function getAudioInstance( name: string, extension = "mp3" ) {
+    return audioInstance( getAudio( name, extension ) )
 }

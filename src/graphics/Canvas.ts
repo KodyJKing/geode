@@ -97,6 +97,17 @@ export default class Canvas {
         return Canvas
     }
 
+    static alpha( alpha: number ) {
+        Canvas.context.globalAlpha = alpha
+        return Canvas
+    }
+
+    static shadow( blur: number, color: string | Color = "black" ) {
+        Canvas.context.shadowBlur = blur
+        Canvas.context.shadowColor = color.toString()
+        return Canvas
+    }
+
     static vimage( image, p: Vector, dimensions: Vector ) { Canvas.image( image, p.x, p.y, dimensions.x, dimensions.y ); return Canvas }
     static image( image, dx = 0, dy = 0, w = 0, h = 0 ) {
         w = w || image.width

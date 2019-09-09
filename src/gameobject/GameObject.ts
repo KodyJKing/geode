@@ -10,6 +10,10 @@ export default class GameObject {
 
     get dimensions() { return vector( this.width, this.height ) }
 
+    get center() {
+        return this.position.add( this.dimensions.half )
+    }
+
     constructor( position: Vector, width, height ) {
         this.position = position
         this.width = width

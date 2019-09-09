@@ -16,6 +16,6 @@ window.addEventListener( "mousedown", e => Input.buttons[ "Mouse" + e.button ] =
 window.addEventListener( "mouseup", e => Input.buttons[ "Mouse" + e.button ] = false )
 
 export default class Input {
-    static mouse: Vector
+    static mouse: Vector = vector( 0, 0 )
     static buttons: { [ name: string ]: boolean } = {}
 }
