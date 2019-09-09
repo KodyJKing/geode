@@ -155,7 +155,7 @@ export default class Canvas {
 
     static transform( t: Transform, until?: Transform ) {
         if ( t == until )
-            return
+            return Canvas
         let { x, y } = t.position
         let { x: sx, y: sy } = t.scale
         let { x: cx, y: cy } = t.center
@@ -165,11 +165,12 @@ export default class Canvas {
             .rotate( t.rotation )
             .scale( sx, sy )
             .translate( -cx, -cy )
+        return Canvas
     }
 
     static inverseTransform( t: Transform, until?: Transform ) {
         if ( t == until )
-            return
+            return Canvas
         let { x, y } = t.position
         let { x: sx, y: sy } = t.scale
         let { x: cx, y: cy } = t.center
@@ -179,6 +180,7 @@ export default class Canvas {
             .translate( -x, -y )
         if ( t.parent )
             this.inverseTransform( t.parent )
+        return Canvas
     }
 
     static vtext( text, p: Vector, width, font = "50px pixel" ) { Canvas.text( text, p.x, p.y, width, font ); return Canvas }

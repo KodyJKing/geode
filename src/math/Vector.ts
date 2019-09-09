@@ -1,3 +1,5 @@
+import GMath from "./GMath";
+
 export function vector( x, y ) { return new Vector( x, y ) }
 export default class Vector {
 
@@ -58,6 +60,13 @@ export default class Vector {
 
     static polar( angle, length ) {
         return new Vector( Math.cos( angle ) * length, Math.sin( angle ) * length )
+    }
+
+    static lissajous( t, xPeriod, yPeriod, xAmplitude = 1, yAmplitude = xAmplitude, xPhase = 0, yPhase = 0 ) {
+        return vector(
+            Math.cos( GMath.TAU * ( t + xPhase ) / xPeriod ) * xAmplitude,
+            Math.sin( GMath.TAU * ( t + yPhase ) / yPeriod ) * yAmplitude
+        )
     }
 
     static random( length ) {

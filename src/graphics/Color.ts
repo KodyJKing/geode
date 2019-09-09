@@ -2,7 +2,7 @@ export function rgb( r: number, g: number, b: number ) {
     return new Color( r, g, b )
 }
 
-export function rgba(r: number, g: number, b: number, a: number = 1) {
+export function rgba( r: number, g: number, b: number, a: number = 1 ) {
     return new Color( r, g, b, a )
 }
 
@@ -40,4 +40,6 @@ export default class Color {
     toString() {
         return `rgba(${this.r},${this.g},${this.b},${this.a})`
     }
+
+    static transparent = rgba( 0, 0, 0, 0 )
 }

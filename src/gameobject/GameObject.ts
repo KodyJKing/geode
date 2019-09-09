@@ -6,8 +6,6 @@ import Scene from "./Scene";
 
 export default class GameObject {
 
-    scene?: Scene
-    sceneIndex = 0
     layer: number = 0
 
     transform: Transform = new Transform()
@@ -33,7 +31,9 @@ export default class GameObject {
     contains( p: Vector ) { return boxContains( this, p ) }
     overlaps( other: GameObject ) { return boxOverlaps( this, other ) }
 
-    onRender() { }
-    onUpdate() { }
+    onRender( scene: Scene ) { }
+    onUpdate( scene: Scene ) { }
+
+    onBuildScene( scene: Scene ) { }
 
 }

@@ -3,11 +3,18 @@ import GameObject from "./GameObject";
 import Input from "../Input";
 import Vector from "../math/Vector";
 import Canvas from "../graphics/Canvas";
-import IGame from "../IGame";
+
+type layerCompareFunction = ( a: GameObject, b: GameObject ) => number
+const defaultCompare = ( a: GameObject, b: GameObject ) => a.layer - b.layer
 
 export default class Scene {
     globalTransform: Transform = new Transform()
-    gameObjects: GameObject[] = []
+    objects: GameObject[] = []
+
+    constructor( objects: GameObject[] = [] ) {
+        for ( let obj of objects )
+            this.add( obj )
+    }
 
     localPoint( point: Vector ) { return this.globalTransform.pointToLocal( point ) }
     localVector( vector: Vector ) { return this.globalTransform.vectorToLocal( vector ) }
@@ -16,41 +23,34 @@ export default class Scene {
 
     get mousePosition() { return this.localPoint( Input.mouse ) }
 
-    render() {
+    render( compare: layerCompareFunction = defaultCompare ) {
         Canvas.push()
-        this.gameObjects.sort( ( a, b ) => a.layer - b.layer )
+        this.objects.sort( compare )
         Canvas.transform( this.globalTransform )
-        for ( let gameObject of this.gameObjects ) {
+        for ( let obj of this.objects ) {
             Canvas.push()
-            Canvas.transform( gameObject.transform, this.globalTransform )
-            gameObject.onRender()
+            Canvas.transform( obj.transform, this.globalTransform )
+            obj.onRender( this )
             Canvas.pop()
         }
         Canvas.pop()
     }
 
     update() {
-        for ( let gameObject of this.gameObjects )
-            gameObject.onUpdate()
+        for ( let obj of this.objects )
+            obj.onUpdate( this )
     }
 
-    add( gameObject: GameObject ) {
-        gameObject.scene = this
-        if ( !gameObject.transform.parent )
-            gameObject.transform.parent = this.globalTransform
-        gameObject.sceneIndex = this.gameObjects.length
-        this.gameObjects.push( gameObject )
+    add( obj: GameObject ) {
+        if ( !obj.transform.parent )
+            obj.transform.parent = this.globalTransform
+        this.objects.push( obj )
+        obj.onBuildScene( this )
     }
 
-    remove( gameObject: GameObject ) {
-        gameObject.scene = undefined
-        if ( gameObject.transform.parent == this.globalTransform )
-            gameObject.transform.parent = undefined
-        let index = gameObject.sceneIndex
-        let lastObj = this.gameObjects.pop()
-        if ( lastObj && lastObj != gameObject ) {
-            this.gameObjects[ index ] = lastObj
-            lastObj.sceneIndex = index
-        }
+    clear() {
+        for ( let obj of this.objects )
+            if ( obj.transform.parent == this.globalTransform )
+                obj.transform.parent = undefined
     }
 }
