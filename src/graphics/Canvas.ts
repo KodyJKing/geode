@@ -1,6 +1,6 @@
 import Vector from "../math/Vector";
 import Transform from "../math/Transform";
-import Color from "./color";
+import Color from "./Color";
 
 export default class Canvas {
 
