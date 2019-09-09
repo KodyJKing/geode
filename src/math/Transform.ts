@@ -44,9 +44,9 @@ export default class Transform {
             m
     }
 
-    transformVector( v: Vector ) { return this.matrix.multiplyVector( v ) }
-    transformPoint( v: Vector ) { return this.matrix.multiplyPoint( v ) }
-    inverseTransformVector( v: Vector ) { return this.inverseMatrix.multiplyVector( v ) }
-    inverseTransformPoint( v: Vector ) { return this.inverseMatrix.multiplyPoint( v ) }
+    vectorToWorld( v: Vector ) { return this.matrix.multiplyVector( v ) }
+    pointToWorld( v: Vector ) { return this.matrix.multiplyPoint( v ) }
+    vectorToLocal( v: Vector ) { return this.inverseMatrix.multiplyVector( v ) }
+    pointToLocal( v: Vector ) { return this.inverseMatrix.multiplyPoint( v ) }
 
 }
