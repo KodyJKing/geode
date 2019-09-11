@@ -21,7 +21,13 @@ type FilterOptions = {
     sepia?: number
 }
 
+type FillStyle = string | CanvasGradient | CanvasPattern | Color
+function coerceFillStyle( style: FillStyle ) {
+    return ( style instanceof Color ) ? style.toString() : style
+}
+
 export default class Canvas {
+
 
     canvas: HTMLCanvasElement
     context: CanvasRenderingContext2D
@@ -68,9 +74,9 @@ export default class Canvas {
         this.resize( innerWidth, innerHeight, pixelDensity )
     }
 
-    background( style ) {
+    background( style: FillStyle ) {
         let { canvas, context: c } = this
-        c.fillStyle = style
+        c.fillStyle = coerceFillStyle( style )
         c.fillRect( 0, 0, canvas.width, canvas.height )
         return this
     }
@@ -118,8 +124,8 @@ export default class Canvas {
         return this
     }
 
-    fillStyle( style: string | Color ) {
-        this.context.fillStyle = style.toString()
+    fillStyle( style: FillStyle ) {
+        this.context.fillStyle = coerceFillStyle( style )
         return this
     }
 
@@ -254,5 +260,12 @@ export default class Canvas {
     pop() {
         this.context.restore()
         return this
+    }
+
+    gradient( from: Vector, to: Vector, colors: [ number, Color | string ][] ) {
+        let grad = this.context.createLinearGradient( from.x, from.y, to.x, to.y )
+        for ( let [ percent, color ] of colors )
+            grad.addColorStop( percent, color.toString() )
+        return grad
     }
 }
