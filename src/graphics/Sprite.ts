@@ -1,4 +1,5 @@
 import Canvas from "./Canvas";
+import Vector from "../math/Vector";
 
 type ImageSource = {
     x: number,
@@ -43,5 +44,9 @@ export default class Sprite {
             canvas.imageSource( source.x, source.y, source.w, source.h ).partialImage( this.image, x, y, width, height )
         else
             canvas.image( image, x, y, width, height )
+    }
+
+    vdraw( canvas: Canvas, v: Vector, center = false ) {
+        this.draw( canvas, v.x, v.y )
     }
 }

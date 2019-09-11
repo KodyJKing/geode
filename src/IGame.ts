@@ -1,14 +1,10 @@
+import { IConstructor } from "./util"
+
 export default interface IGame {
     update()
 }
 
-type GameClass = { prototype: { constructor: () => IGame } }
-
-interface GameConstructor {
-    new(): IGame
-}
-
-export function startGameLoop( gameClass: GameConstructor ) {
+export function startGameLoop( gameClass: IConstructor<IGame> ) {
     window.onload = () => {
         let game = new gameClass()
         function loop() {

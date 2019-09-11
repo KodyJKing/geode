@@ -1,6 +1,25 @@
 import Vector from "../math/Vector";
 import Transform from "../math/Transform";
 import Color from "./Color";
+import { camelToDashes } from "../util";
+
+type FilterOptions = {
+    blur?: number,
+    brightness?: number,
+    contrast?: number,
+    dropShadow?: {
+        offsetX: number,
+        offsetY: number,
+        blurRadius: number,
+        color: string | Color
+    },
+    grayscale?: number,
+    hueRotate?: number,
+    invert?: number,
+    opacity?: number
+    saturate?: number,
+    sepia?: number
+}
 
 export default class Canvas {
 
@@ -18,7 +37,6 @@ export default class Canvas {
     constructor( canvas: HTMLCanvasElement | string ) {
         if ( typeof canvas == "string" ) {
             let _canvas = document.getElementById( canvas )
-            console.log( _canvas )
             if ( _canvas instanceof HTMLCanvasElement )
                 canvas = _canvas
             else
@@ -110,9 +128,42 @@ export default class Canvas {
         return this
     }
 
+    composition( operation: string ) {
+        this.context.globalCompositeOperation = operation
+        return this
+    }
+
     shadow( blur: number, color: string | Color = "black" ) {
         this.context.shadowBlur = blur
         this.context.shadowColor = color.toString()
+        return this
+    }
+
+    addFilter( options: null | string | FilterOptions ) {
+        if ( typeof options == "string" ) {
+            this.context.filter = options
+        } else if ( options == null ) {
+            this.context.filter = "none"
+        } else {
+
+            let stringified = Object.entries( options as any ).map(
+                ( [ key, value ] ) => {
+                    if ( typeof value == "object" )
+                        value = Object.values( Object ).map( x => x.toString() ).join( ", " )
+                    let suffix = key == "hueRotate" ? "turn" : ""
+                    return camelToDashes( key ) + "(" + value + suffix + ")"
+                }
+            ).join( " " )
+
+            this.context.filter = stringified
+        }
+
+        return this
+    }
+
+    filter( options: null | string | FilterOptions ) {
+        this.context.filter = "none"
+        this.addFilter( options )
         return this
     }
 
