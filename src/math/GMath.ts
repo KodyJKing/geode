@@ -26,4 +26,19 @@ export default class GMath {
         return from + GMath.shortestRotation( from, to ) * amount
     }
 
+    static sigmoid( x ) {
+        let exp = Math.exp( x )
+        return exp / ( exp + 1 )
+    }
+
+    static soften( x, softness = 1 ) {
+        function standard( x ) {
+            return x > 1 ?
+                x - 0.5 :
+                x * x / 2
+        }
+
+        return standard( Math.abs( x ) / softness ) * softness * Math.sign( x )
+    }
+
 }
