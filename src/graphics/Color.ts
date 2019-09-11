@@ -1,3 +1,5 @@
+import Colors from "./Colors"
+
 export function rgb( r: number, g: number, b: number ) {
     return new Color( r, g, b )
 }
@@ -26,6 +28,12 @@ export default class Color {
             return new Color( parts[ 0 ], parts[ 1 ], parts[ 2 ], ( parts[ 3 ] || 255 ) / 255 )
         }
 
+        if ( str.indexOf( "(" ) == -1 ) {
+            let color = Colors[ str ]
+            if ( !color ) throw new Error( "unrecognized color " + str )
+            return color
+        }
+
         let type = str.match( /\w+/ )![ 0 ]
         let args = str.match( /\d+/g )!.map( x => parseFloat( x ) )
 
@@ -40,6 +48,4 @@ export default class Color {
     toString() {
         return `rgba(${this.r},${this.g},${this.b},${this.a})`
     }
-
-    static transparent = rgba( 0, 0, 0, 0 )
 }

@@ -3,15 +3,17 @@ import Vector, { vector } from "../math/Vector";
 import { boxContains, boxOverlaps } from "../collision/collision";
 import Transform from "../math/Transform";
 import Scene from "./Scene";
+import Component from "./Component";
 
 export default class GameObject {
-
     layer: number = 0
 
     transform: Transform = new Transform()
 
     width: number = 0
     height: number = 0
+
+    // components: Set<Component> = new Set<Component>()
 
     get position() { return this.transform.position }
     set position( value: Vector ) { this.transform.position = value }
@@ -22,7 +24,7 @@ export default class GameObject {
     get dimensions() { return vector( this.width, this.height ) }
     get center() { return this.position.add( this.dimensions.half ) }
 
-    constructor( position: Vector, width, height ) {
+    constructor( position: Vector = Vector.ZERO, width = 0, height = 0 ) {
         this.position = position
         this.width = width
         this.height = height
@@ -35,5 +37,11 @@ export default class GameObject {
     onUpdate( scene: Scene ) { }
 
     onBuildScene( scene: Scene ) { }
+
+    // addComponent( component: Component ) {
+    //     component.parent = this
+    //     this.components.add( component )
+    //     return this
+    // }
 
 }

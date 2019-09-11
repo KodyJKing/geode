@@ -8,7 +8,7 @@ type layerCompareFunction = ( a: GameObject, b: GameObject ) => number
 const defaultCompare = ( a: GameObject, b: GameObject ) => a.layer - b.layer
 
 export default class Scene {
-    globalTransform: Transform = new Transform()
+    cameraTransform: Transform = new Transform()
     objects: GameObject[] = []
 
     constructor( objects: GameObject[] = [] ) {
@@ -16,20 +16,20 @@ export default class Scene {
             this.add( obj )
     }
 
-    localPoint( point: Vector ) { return this.globalTransform.pointToLocal( point ) }
-    localVector( vector: Vector ) { return this.globalTransform.vectorToLocal( vector ) }
-    screnePoint( point: Vector ) { return this.globalTransform.pointToWorld( point ) }
-    scremeVector( vector: Vector ) { return this.globalTransform.vectorToWorld( vector ) }
+    screneToWorldPoint( point: Vector ) { return this.cameraTransform.transformPoint( point ) }
+    screneToWorldVector( vector: Vector ) { return this.cameraTransform.transformVector( vector ) }
+    worldToScrenePoint( point: Vector ) { return this.cameraTransform.inverseTransformPoint( point ) }
+    worldToScreneVector( vector: Vector ) { return this.cameraTransform.inverseTransformVector( vector ) }
 
-    get mousePosition() { return this.localPoint( Input.mouse ) }
+    get mousePosition() { return this.screneToWorldPoint( Input.mouse ) }
 
-    render( compare: layerCompareFunction = defaultCompare ) {
+    render() {
         Canvas.push()
-        this.objects.sort( compare )
-        Canvas.transform( this.globalTransform )
+        Canvas.inverseTransform( this.cameraTransform )
+        this.objects.sort( defaultCompare )
         for ( let obj of this.objects ) {
             Canvas.push()
-            Canvas.transform( obj.transform, this.globalTransform )
+            Canvas.transform( obj.transform )
             obj.onRender( this )
             Canvas.pop()
         }
@@ -42,15 +42,7 @@ export default class Scene {
     }
 
     add( obj: GameObject ) {
-        if ( !obj.transform.parent )
-            obj.transform.parent = this.globalTransform
         this.objects.push( obj )
         obj.onBuildScene( this )
-    }
-
-    clear() {
-        for ( let obj of this.objects )
-            if ( obj.transform.parent == this.globalTransform )
-                obj.transform.parent = undefined
     }
 }

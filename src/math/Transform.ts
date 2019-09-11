@@ -1,12 +1,12 @@
-import Vector from "./Vector";
+import Vector, { vector } from "./Vector";
 import Matrix from "./Matrix";
 
 export default class Transform {
-    parent?: Transform
     position: Vector
     rotation: number
     scale: Vector
     center: Vector
+    parent?: Transform
 
     constructor( position = new Vector( 0, 0 ), rotation = 0, scale = new Vector( 1, 1 ), center = new Vector( 0, 0 ), parent?: Transform ) {
         this.position = position
@@ -44,9 +44,14 @@ export default class Transform {
             m
     }
 
-    vectorToWorld( v: Vector ) { return this.matrix.multiplyVector( v ) }
-    pointToWorld( v: Vector ) { return this.matrix.multiplyPoint( v ) }
-    vectorToLocal( v: Vector ) { return this.inverseMatrix.multiplyVector( v ) }
-    pointToLocal( v: Vector ) { return this.inverseMatrix.multiplyPoint( v ) }
+    transformVector( v: Vector ) { return this.matrix.multiplyVector( v ) }
+    transformPoint( v: Vector ) { return this.matrix.multiplyPoint( v ) }
+    inverseTransformVector( v: Vector ) { return this.inverseMatrix.multiplyVector( v ) }
+    inverseTransformPoint( v: Vector ) { return this.inverseMatrix.multiplyPoint( v ) }
+
+    vectorToWorld( v: Vector ) { return this.transformVector( v ) }
+    pointToWorld( v: Vector ) { return this.transformPoint( v ) }
+    vectorToLocal( v: Vector ) { return this.inverseTransformVector( v ) }
+    pointToLocal( v: Vector ) { return this.inverseTransformPoint( v ) }
 
 }
