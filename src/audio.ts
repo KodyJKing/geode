@@ -1,8 +1,8 @@
 import { getAudio } from "./assets";
 
-type AudioOptions = { volume: number }
+type AudioOptions = { volume?: number, playbackRate?: number }
 
-export function audioInstance( audio: HTMLAudioElement, options: AudioOptions = { volume: 1 } ): HTMLAudioElement {
+export function audioInstance( audio: HTMLAudioElement, options: AudioOptions = {} ): HTMLAudioElement {
     let node = audio.cloneNode() as HTMLAudioElement
     Object.assign( node, options )
     return node
