@@ -12,6 +12,6 @@ export function playAudio( audio: HTMLAudioElement ) {
     audio.play().catch( e => { } )
 }
 
-export function playSound( name: string, extension: string = "mp3", options?: AudioOptions ) {
-    playAudio( audioInstance( getAudio( name, extension ), options ) )
+export function playSound( path: string, options?: AudioOptions ) {
+    playAudio( audioInstance( getAudio( path ), options ) )
 }

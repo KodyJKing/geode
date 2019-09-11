@@ -1,8 +1,7 @@
 import { audioInstance } from "./audio";
 
 const cache = {}
-export function getAsset( name: string, extension: string, fromPath: ( string ) => any ) {
-    let path = "/assets/" + name + "." + extension
+export function getAsset( path: string, fromPath: ( string ) => any ) {
     if ( cache[ path ] )
         return cache[ path ]
     let asset = fromPath( path )
@@ -10,18 +9,26 @@ export function getAsset( name: string, extension: string, fromPath: ( string ) 
     return asset
 }
 
-export function getImage( name: string, extension = "png" ) {
-    return getAsset( name, extension, path => {
+function assetPath( path: string, defaultExtension: string, defaultDir: string ) {
+    if ( path.indexOf( "/" ) == -1 )
+        path = defaultDir + "/" + path
+    if ( path.indexOf( "." ) == -1 )
+        path = path + "." + defaultExtension
+    return "/assets/" + path
+}
+
+export function getImage( path: string ) {
+    return getAsset( assetPath( path, "png", "images" ), path => {
         let img = new Image()
         img.src = path
         return img
     } ) as HTMLImageElement
 }
 
-export function getAudio( name: string, extension = "mp3" ) {
-    return getAsset( name, extension, path => new Audio( path ) ) as HTMLAudioElement
+export function getAudio( path: string ) {
+    return getAsset( assetPath( path, "mp3", "audio" ), path => new Audio( path ) ) as HTMLAudioElement
 }
 
-export function getAudioInstance( name: string, extension = "mp3" ) {
-    return audioInstance( getAudio( name, extension ) )
+export function getAudioInstance( path: string ) {
+    return audioInstance( getAudio( path ) )
 }
