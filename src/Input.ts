@@ -2,6 +2,8 @@ import Vector, { vector } from "./math/Vector";
 import Canvas from "./graphics/Canvas";
 
 window.addEventListener( "mousemove", e => {
+    if ( !Canvas.canvas )
+        return
     let rect = Canvas.canvas.getBoundingClientRect()
     Input.mouse = vector(
         e.x - rect.left,

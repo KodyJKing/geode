@@ -9,16 +9,16 @@ export function getAsset( path: string, fromPath: ( string ) => any ) {
     return asset
 }
 
-function assetPath( path: string, defaultExtension: string, defaultDir: string ) {
-    if ( path.indexOf( "/" ) == -1 )
-        path = defaultDir + "/" + path
+function assetPath( path: string, defaultExtension: string ) { //, defaultDir: string ) {
+    // if ( path.indexOf( "/" ) == -1 )
+    //     path = defaultDir + "/" + path
     if ( path.indexOf( "." ) == -1 )
         path = path + "." + defaultExtension
     return "/assets/" + path
 }
 
 export function getImage( path: string ) {
-    return getAsset( assetPath( path, "png", "images" ), path => {
+    return getAsset( assetPath( "images/" + path, "png" ), path => {
         let img = new Image()
         img.src = path
         return img
@@ -26,7 +26,7 @@ export function getImage( path: string ) {
 }
 
 export function getAudio( path: string ) {
-    return getAsset( assetPath( path, "mp3", "audio" ), path => new Audio( path ) ) as HTMLAudioElement
+    return getAsset( assetPath( "audio/" + path, "mp3" ), path => new Audio( path ) ) as HTMLAudioElement
 }
 
 export function getAudioInstance( path: string ) {
