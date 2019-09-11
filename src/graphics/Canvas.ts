@@ -145,7 +145,7 @@ export default class Canvas {
         return this
     }
 
-    addFilter( options: null | string | FilterOptions ) {
+    filter( options: null | string | FilterOptions ) {
         if ( typeof options == "string" ) {
             this.context.filter = options
         } else if ( options == null ) {
@@ -164,12 +164,6 @@ export default class Canvas {
             this.context.filter = stringified
         }
 
-        return this
-    }
-
-    filter( options: null | string | FilterOptions ) {
-        this.context.filter = "none"
-        this.addFilter( options )
         return this
     }
 
