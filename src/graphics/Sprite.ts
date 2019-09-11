@@ -31,7 +31,7 @@ export default class Sprite {
         return this
     }
 
-    draw( x = 0, y = 0, center = false ) {
+    draw( canvas: Canvas, x = 0, y = 0, center = false ) {
         let { image, source, width, height } = this
 
         if ( center ) {
@@ -40,8 +40,8 @@ export default class Sprite {
         }
 
         if ( source )
-            Canvas.imageSource( source.x, source.y, source.w, source.h ).partialImage( this.image, x, y, width, height )
+            canvas.imageSource( source.x, source.y, source.w, source.h ).partialImage( this.image, x, y, width, height )
         else
-            Canvas.image( image, x, y, width, height )
+            canvas.image( image, x, y, width, height )
     }
 }

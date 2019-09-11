@@ -1,12 +1,16 @@
-import Canvas from "./graphics/Canvas";
-
 export default interface IGame {
     update()
 }
 
-export function startGameLoop( game: IGame ) {
+type GameClass = { prototype: { constructor: () => IGame } }
+
+interface GameConstructor {
+    new(): IGame
+}
+
+export function startGameLoop( gameClass: GameConstructor ) {
     window.onload = () => {
-        Canvas.setup()
+        let game = new gameClass()
         function loop() {
             game.update()
             requestAnimationFrame( loop )

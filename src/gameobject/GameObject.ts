@@ -4,6 +4,7 @@ import { boxContains, boxOverlaps } from "../collision/collision";
 import Transform from "../math/Transform";
 import Scene from "./Scene";
 import Component from "./Component";
+import Canvas from "../graphics/Canvas";
 
 export default class GameObject {
     layer: number = 0
@@ -33,7 +34,7 @@ export default class GameObject {
     contains( p: Vector ) { return boxContains( this, p ) }
     overlaps( other: GameObject ) { return boxOverlaps( this, other ) }
 
-    onRender( scene: Scene ) { }
+    onRender( canvas: Canvas, scene: Scene ) { }
     onUpdate( scene: Scene ) { }
 
     onBuildScene( scene: Scene ) { }

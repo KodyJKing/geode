@@ -4,124 +4,132 @@ import Color from "./Color";
 
 export default class Canvas {
 
-    static canvas: HTMLCanvasElement
-    static context: CanvasRenderingContext2D
+    canvas: HTMLCanvasElement
+    context: CanvasRenderingContext2D
 
-    static width = window.innerWidth
-    static height = window.innerHeight
+    width = window.innerWidth
+    height = window.innerHeight
 
-    private static _imageSource = {
+    private _imageSource = {
         x: 0, y: 0,
         w: 0, h: 0
     }
 
-    static setup() {
-        Canvas.canvas = document.getElementById( "canvas" ) as HTMLCanvasElement
-        Canvas.context = Canvas.canvas.getContext( "2d" ) as CanvasRenderingContext2D
+    constructor( canvas: HTMLCanvasElement | string ) {
+        if ( typeof canvas == "string" ) {
+            let _canvas = document.getElementById( canvas )
+            console.log( _canvas )
+            if ( _canvas instanceof HTMLCanvasElement )
+                canvas = _canvas
+            else
+                throw new Error( "No canvas with id: " + canvas + " found." )
+        }
+        this.canvas = canvas
+        this.context = this.canvas.getContext( "2d" ) as CanvasRenderingContext2D
     }
 
-    static resize( w, h, pixelDensity = 1 ) {
-        Canvas.width = w
-        Canvas.height = h
-        Canvas.canvas.style.width = w + "px"
-        Canvas.canvas.style.height = h + "px"
-        Canvas.canvas.width = w * pixelDensity
-        Canvas.canvas.height = h * pixelDensity
-        Canvas.scale( pixelDensity, pixelDensity )
+    resize( w, h, pixelDensity = 1 ) {
+        this.width = w
+        this.height = h
+        this.canvas.style.width = w + "px"
+        this.canvas.style.height = h + "px"
+        this.canvas.width = w * pixelDensity
+        this.canvas.height = h * pixelDensity
+        this.scale( pixelDensity, pixelDensity )
     }
 
-    static get dimensions() {
-        return new Vector( Canvas.width, Canvas.height )
+    get dimensions() {
+        return new Vector( this.width, this.height )
     }
 
-    static get center() {
-        return Canvas.dimensions.half
+    get center() {
+        return this.dimensions.half
     }
 
-    static fitWindow( pixelDensity = 1 ) {
-        Canvas.resize( innerWidth, innerHeight, pixelDensity )
+    fitWindow( pixelDensity = 1 ) {
+        this.resize( innerWidth, innerHeight, pixelDensity )
     }
 
-    static background( style ) {
-        let { canvas, context: c } = Canvas
+    background( style ) {
+        let { canvas, context: c } = this
         c.fillStyle = style
         c.fillRect( 0, 0, canvas.width, canvas.height )
-        return Canvas
+        return this
     }
 
-    static vline( a: Vector, b: Vector ) { Canvas.line( a.x, a.y, b.x, b.y ); return Canvas }
-    static line( x1, y1, x2, y2 ) {
-        let { context: c } = Canvas
+    vline( a: Vector, b: Vector ) { this.line( a.x, a.y, b.x, b.y ); return this }
+    line( x1, y1, x2, y2 ) {
+        let { context: c } = this
         c.beginPath()
         c.moveTo( x1, y1 )
         c.lineTo( x2, y2 )
         c.closePath()
-        return Canvas
+        return this
     }
 
-    static vrect( p: Vector, dimensions: Vector ) { Canvas.rect( p.x, p.y, dimensions.x, dimensions.y ); return Canvas }
-    static rect( x, y, w, h ) {
-        let { context: c } = Canvas
+    vrect( p: Vector, dimensions: Vector ) { this.rect( p.x, p.y, dimensions.x, dimensions.y ); return this }
+    rect( x, y, w, h ) {
+        let { context: c } = this
         c.beginPath()
         c.rect( x, y, w, h )
         c.closePath()
-        return Canvas
+        return this
     }
 
-    static vcircle( p: Vector, r ) { Canvas.circle( p.x, p.y, r ); return Canvas }
-    static circle( x, y, r ) {
-        let { context: c } = Canvas
+    vcircle( p: Vector, r ) { this.circle( p.x, p.y, r ); return this }
+    circle( x, y, r ) {
+        let { context: c } = this
         c.beginPath()
         c.ellipse( x, y, r, r, 0, 0, Math.PI * 2 )
         c.closePath()
-        return Canvas
+        return this
     }
 
-    static stroke() {
-        Canvas.context.stroke()
-        return Canvas
+    stroke() {
+        this.context.stroke()
+        return this
     }
 
-    static fill() {
-        Canvas.context.fill()
-        return Canvas
+    fill() {
+        this.context.fill()
+        return this
     }
 
-    static strokeStyle( style: string | Color ) {
-        Canvas.context.strokeStyle = style.toString()
-        return Canvas
+    strokeStyle( style: string | Color ) {
+        this.context.strokeStyle = style.toString()
+        return this
     }
 
-    static fillStyle( style: string | Color ) {
-        Canvas.context.fillStyle = style.toString()
-        return Canvas
+    fillStyle( style: string | Color ) {
+        this.context.fillStyle = style.toString()
+        return this
     }
 
-    static alpha( alpha: number ) {
-        Canvas.context.globalAlpha = alpha
-        return Canvas
+    alpha( alpha: number ) {
+        this.context.globalAlpha = alpha
+        return this
     }
 
-    static shadow( blur: number, color: string | Color = "black" ) {
-        Canvas.context.shadowBlur = blur
-        Canvas.context.shadowColor = color.toString()
-        return Canvas
+    shadow( blur: number, color: string | Color = "black" ) {
+        this.context.shadowBlur = blur
+        this.context.shadowColor = color.toString()
+        return this
     }
 
-    static vimage( image, p: Vector, dimensions: Vector ) { Canvas.image( image, p.x, p.y, dimensions.x, dimensions.y ); return Canvas }
-    static image( image, dx = 0, dy = 0, w = 0, h = 0 ) {
+    vimage( image, p: Vector, dimensions: Vector ) { this.image( image, p.x, p.y, dimensions.x, dimensions.y ); return this }
+    image( image, dx = 0, dy = 0, w = 0, h = 0 ) {
         w = w || image.width
         h = h || image.height
-        Canvas.context.drawImage( image, dx, dy, w, h )
-        return Canvas
+        this.context.drawImage( image, dx, dy, w, h )
+        return this
     }
 
-    static vpartialImage( image, p: Vector, dimensions: Vector ) { Canvas.partialImage( image, p.x, p.y, dimensions.x, dimensions.y ); return Canvas }
-    static partialImage( image, x, y, w, h ) {
-        let { _imageSource: imageSource } = Canvas
+    vpartialImage( image, p: Vector, dimensions: Vector ) { this.partialImage( image, p.x, p.y, dimensions.x, dimensions.y ); return this }
+    partialImage( image, x, y, w, h ) {
+        let { _imageSource: imageSource } = this
         w = w || imageSource.w
         h = h || imageSource.h
-        Canvas.context.drawImage(
+        this.context.drawImage(
             image,
             imageSource.x, imageSource.y,
             imageSource.w, imageSource.h,
@@ -129,75 +137,71 @@ export default class Canvas {
         )
     }
 
-    static vimageSource( p: Vector, dimensions: Vector ) { Canvas.imageSource( p.x, p.y, dimensions.x, dimensions.y ); return Canvas }
-    static imageSource( x, y, w, h ) {
-        Canvas._imageSource = { x, y, w, h }
-        return Canvas
+    vimageSource( p: Vector, dimensions: Vector ) { this.imageSource( p.x, p.y, dimensions.x, dimensions.y ); return this }
+    imageSource( x, y, w, h ) {
+        this._imageSource = { x, y, w, h }
+        return this
     }
 
-    static vtranslate( p: Vector ) { Canvas.translate( p.x, p.y ); return Canvas }
-    static translate( x, y ) {
-        // Canvas.context.translate( Math.round( x ), Math.round( y ) )
-        Canvas.context.translate( x, y )
-        return Canvas
+    vtranslate( p: Vector ) { this.translate( p.x, p.y ); return this }
+    translate( x, y ) {
+        // this.context.translate( Math.round( x ), Math.round( y ) )
+        this.context.translate( x, y )
+        return this
     }
 
-    static rotate( angle ) {
-        Canvas.context.rotate( angle )
-        return Canvas
+    rotate( angle ) {
+        this.context.rotate( angle )
+        return this
     }
 
-    static vscale( v: Vector ) { Canvas.scale( v.x, v.y ); return Canvas }
-    static scale( x, y ) {
-        Canvas.context.scale( x, y )
-        return Canvas
+    vscale( v: Vector ) { this.scale( v.x, v.y ); return this }
+    scale( x, y ) {
+        this.context.scale( x, y )
+        return this
     }
 
-    static transform( t: Transform, until?: Transform ) {
-        if ( t == until )
-            return Canvas
+    transform( t: Transform ) {
         let { x, y } = t.position
         let { x: sx, y: sy } = t.scale
         let { x: cx, y: cy } = t.center
         if ( t.parent )
             this.transform( t.parent )
-        Canvas.translate( x, y )
+        this.translate( x, y )
             .rotate( t.rotation )
             .scale( sx, sy )
             .translate( -cx, -cy )
-        return Canvas
+        return this
     }
 
-    static inverseTransform( t: Transform, until?: Transform ) {
-        if ( t == until )
-            return Canvas
+    inverseTransform( t: Transform ) {
         let { x, y } = t.position
         let { x: sx, y: sy } = t.scale
         let { x: cx, y: cy } = t.center
-        Canvas.translate( cx, cy )
+        this.translate( cx, cy )
             .scale( 1 / sx, 1 / sy )
             .rotate( - t.rotation )
             .translate( -x, -y )
         if ( t.parent )
             this.inverseTransform( t.parent )
-        return Canvas
+        return this
     }
 
-    static vtext( text, p: Vector, width, font = "50px pixel" ) { Canvas.text( text, p.x, p.y, width, font ); return Canvas }
-    static text( text, x, y, width, font = "50px pixel" ) {
-        let c = Canvas.context
+    vtext( text, p: Vector, width, font = "50px pixel" ) { this.text( text, p.x, p.y, width, font ); return this }
+    text( text, x, y, width, font = "50px pixel" ) {
+        let c = this.context
         c.font = font
         c.fillText( text, x, y, width )
-        return Canvas
+        return this
     }
 
-    static push() {
-        Canvas.context.save()
-        return Canvas
+    push() {
+        this.context.save()
+        return this
     }
 
-    static pop() {
-        Canvas.context.restore()
-        return Canvas
+    pop() {
+        this.context.restore()
+        return this
     }
 }

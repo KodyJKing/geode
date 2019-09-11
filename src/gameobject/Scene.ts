@@ -10,8 +10,11 @@ const defaultCompare = ( a: GameObject, b: GameObject ) => a.layer - b.layer
 export default class Scene {
     cameraTransform: Transform = new Transform()
     objects: GameObject[] = []
+    canvas: Canvas
 
-    constructor( objects: GameObject[] = [] ) {
+    constructor( canvas: Canvas, cameraTransform: Transform, objects: GameObject[] = [] ) {
+        this.canvas = canvas
+        this.cameraTransform = cameraTransform
         for ( let obj of objects )
             this.add( obj )
     }
@@ -21,19 +24,20 @@ export default class Scene {
     worldToScrenePoint( point: Vector ) { return this.cameraTransform.inverseTransformPoint( point ) }
     worldToScreneVector( vector: Vector ) { return this.cameraTransform.inverseTransformVector( vector ) }
 
-    get mousePosition() { return this.screneToWorldPoint( Input.mouse ) }
+    get mousePosition() { return this.screneToWorldPoint( Input.mouseScreenPosition( this.canvas ) ) }
 
     render() {
-        Canvas.push()
-        Canvas.inverseTransform( this.cameraTransform )
+        let { canvas } = this
+        canvas.push()
+        canvas.inverseTransform( this.cameraTransform )
         this.objects.sort( defaultCompare )
         for ( let obj of this.objects ) {
-            Canvas.push()
-            Canvas.transform( obj.transform )
-            obj.onRender( this )
-            Canvas.pop()
+            canvas.push()
+            canvas.transform( obj.transform )
+            obj.onRender( canvas, this )
+            canvas.pop()
         }
-        Canvas.pop()
+        canvas.pop()
     }
 
     update() {
