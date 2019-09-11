@@ -256,6 +256,20 @@ export default class Canvas {
         return this
     }
 
+    closedPath( coords: number[] ) {
+        this.context.beginPath()
+        for ( let i = 0; i < coords.length; i += 2 ) {
+            let x = coords[ i ]
+            let y = coords[ i + 1 ]
+            if ( i == 0 )
+                this.context.moveTo( x, y )
+            else
+                this.context.lineTo( x, y )
+        }
+        this.context.closePath()
+        return this
+    }
+
     gradient( from: Vector, to: Vector, colors: [ number, Color | string ][] ) {
         let grad = this.context.createLinearGradient( from.x, from.y, to.x, to.y )
         for ( let [ percent, color ] of colors )
