@@ -3,6 +3,8 @@ import GameObject from "./GameObject";
 import Input from "../Input";
 import Vector from "../math/Vector";
 import Canvas from "../graphics/Canvas";
+import IBoundingBox from "../collision/IBoundingBox";
+import { boxOverlaps } from "../collision/collision";
 
 type layerCompareFunction = ( a: GameObject, b: GameObject ) => number
 const defaultCompare = ( a: GameObject, b: GameObject ) => a.layer - b.layer
@@ -48,5 +50,13 @@ export default class Scene {
     add( obj: GameObject ) {
         this.objects.push( obj )
         obj.onBuildScene( this )
+    }
+
+    objectsInBox( box: IBoundingBox, filter: ( GameObject ) => boolean = () => true ) {
+        let result: GameObject[] = []
+        for ( let obj of this.objects )
+            if ( boxOverlaps( box, obj ) && filter( obj ) )
+                result.push( obj )
+        return result
     }
 }
