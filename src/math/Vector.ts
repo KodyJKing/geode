@@ -40,6 +40,11 @@ export default class Vector {
     divide( divisor: number ) { return new Vector( this.x / divisor, this.y / divisor ) }
     lerp( other: Vector, t: number ) { return this.multiply( 1 - t ).add( other.multiply( t ) ) }
 
+    *[ Symbol.iterator ]() {
+        yield this.x
+        yield this.y
+    }
+
     complexProduct( other: Vector ) {
         let x = this.x * other.x - this.y * other.y
         let y = this.x * other.y + this.y * other.x
