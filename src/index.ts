@@ -10,12 +10,12 @@ import * as _8 from "./graphics/Color"
 import * as _9 from "./graphics/Sprite"
 import * as _10 from "./graphics/SpriteSheet"
 import * as _11 from "./IGame"
-import * as _13 from "./Input"
-import * as _14 from "./math/GMath"
-import * as _15 from "./math/Matrix"
-import * as _16 from "./math/Transform"
-import * as _17 from "./math/Vector"
-import * as _18 from "./util"
+import * as _12 from "./Input"
+import * as _13 from "./math/GMath"
+import * as _14 from "./math/Matrix"
+import * as _15 from "./math/Transform"
+import * as _16 from "./math/Vector"
+import * as _17 from "./util"
 
 export default {
     _0,
@@ -30,10 +30,10 @@ export default {
     _9,
     _10,
     _11,
+    _12,
     _13,
     _14,
     _15,
     _16,
-    _17,
-    _18
+    _17
 }

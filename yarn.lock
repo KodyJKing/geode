@@ -344,6 +344,18 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.17.tgz#b96d4dd3e427382482848948041d3754d40fd5ce"
   integrity sha512-p/sGgiPaathCfOtqu2fx5Mu1bcjuP8ALFg4xpGgNkcin7LwRyzUKniEHBKdcE1RPsenq5JVPIpMTJSygLboygQ==
 
+"@types/offscreencanvas@^2019.6.0":
+  version "2019.6.0"
+  resolved "https://registry.yarnpkg.com/@types/offscreencanvas/-/offscreencanvas-2019.6.0.tgz#a91e3df1aabdf297f6b903aadce01b33e6844bdf"
+  integrity sha512-Mf1bgQd2si9fCdIhEIG5tq3PWEyBD8j6stPSQRsia3kKNIjYD5uBGbBmRFd0JqsVTu8K6a+YTQ3zCz+2dUD4uQ==
+  dependencies:
+    "@types/webgl2" "*"
+
+"@types/webgl2@*":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@types/webgl2/-/webgl2-0.0.5.tgz#dd925e20ab8ace80eb4b1e46fda5b109c508fb0d"
+  integrity sha512-oGaKsBbxQOY5+aJFV3KECDhGaXt+yZJt2y/OZsnQGLRkH6Fvr7rv4pCt3SRH1somIHfej/c4u7NSpCyd9x+1Ow==
+
 ansi-align@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-3.0.0.tgz#b536b371cf687caaef236c18d3e21fe3797467cb"

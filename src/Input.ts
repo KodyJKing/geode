@@ -14,7 +14,7 @@ export default class Input {
     static buttons: { [ name: string ]: boolean } = {}
     static mouseScreenPosition( canvas: HTMLCanvasElement | Canvas ) {
         if ( canvas instanceof Canvas )
-            canvas = canvas.canvas
+            canvas = canvas.canvas as HTMLCanvasElement
         let b = canvas.getBoundingClientRect()
         return Input.mouse.addXY( -b.left, -b.top )
     }

@@ -28,8 +28,7 @@ function coerceFillStyle( style: FillStyle ) {
 
 export default class Canvas {
 
-
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement | OffscreenCanvas
     context: CanvasRenderingContext2D
 
     width = window.innerWidth
@@ -40,7 +39,7 @@ export default class Canvas {
         w: 0, h: 0
     }
 
-    constructor( canvas: HTMLCanvasElement | string ) {
+    constructor( canvas: HTMLCanvasElement | OffscreenCanvas | string ) {
         if ( typeof canvas == "string" ) {
             let _canvas = document.getElementById( canvas )
             if ( _canvas instanceof HTMLCanvasElement )
@@ -55,8 +54,10 @@ export default class Canvas {
     resize( w, h, pixelDensity = 1 ) {
         this.width = w
         this.height = h
-        this.canvas.style.width = w + "px"
-        this.canvas.style.height = h + "px"
+        if ( this.canvas instanceof HTMLCanvasElement ) {
+            this.canvas.style.width = w + "px"
+            this.canvas.style.height = h + "px"
+        }
         this.canvas.width = w * pixelDensity
         this.canvas.height = h * pixelDensity
         this.scale( pixelDensity, pixelDensity )
@@ -145,6 +146,11 @@ export default class Canvas {
         return this
     }
 
+    smooth( enable: boolean ) {
+        this.context.imageSmoothingEnabled = enable
+        return this
+    }
+
     filter( options: null | string | FilterOptions ) {
         if ( typeof options == "string" ) {
             this.context.filter = options
@@ -169,6 +175,7 @@ export default class Canvas {
 
     vimage( image, p: Vector, dimensions: Vector = Vector.ZERO ) { this.image( image, p.x, p.y, dimensions.x, dimensions.y ); return this }
     image( image, dx = 0, dy = 0, w = 0, h = 0 ) {
+        if ( image.width == 0 ) return
         w = w || image.width
         h = h || image.height
         this.context.drawImage( image, dx, dy, w, h )
