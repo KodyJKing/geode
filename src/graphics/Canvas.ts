@@ -167,7 +167,7 @@ export default class Canvas {
         return this
     }
 
-    vimage( image, p: Vector, dimensions: Vector ) { this.image( image, p.x, p.y, dimensions.x, dimensions.y ); return this }
+    vimage( image, p: Vector, dimensions: Vector = Vector.ZERO ) { this.image( image, p.x, p.y, dimensions.x, dimensions.y ); return this }
     image( image, dx = 0, dy = 0, w = 0, h = 0 ) {
         w = w || image.width
         h = h || image.height
