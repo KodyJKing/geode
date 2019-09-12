@@ -13,10 +13,9 @@ import * as _11 from "./IGame"
 import * as _13 from "./Input"
 import * as _14 from "./math/GMath"
 import * as _15 from "./math/Matrix"
-import * as _16 from "./math/MutableVector"
-import * as _17 from "./math/Transform"
-import * as _18 from "./math/Vector"
-import * as _19 from "./util"
+import * as _16 from "./math/Transform"
+import * as _17 from "./math/Vector"
+import * as _18 from "./util"
 
 export default {
     _0,
@@ -36,6 +35,5 @@ export default {
     _15,
     _16,
     _17,
-    _18,
-    _19
+    _18
 }

@@ -32,13 +32,13 @@ export default class GMath {
     }
 
     static soften( x, softness = 1 ) {
-        function standard( x ) {
+        function f( x ) {
             return x > 1 ?
                 x - 0.5 :
                 x * x / 2
         }
 
-        return standard( Math.abs( x ) / softness ) * softness * Math.sign( x )
+        return f( Math.abs( x ) / softness ) * softness * Math.sign( x )
     }
 
 }
