@@ -1,3 +1,7 @@
+import IBoundingBox from "./collision/IBoundingBox"
+import Vector, { vector } from "./math/Vector"
+import BoundingBox from "./collision/BoundingBox"
+
 export function frozen<T>( obj: T ) {
     return Object.freeze( obj ) as T
 }
@@ -27,6 +31,16 @@ export function memoize( func: ( any ) => any ) {
         cache[ arg ] = value
         return value
     }
+}
+
+export function fitBox( inner: IBoundingBox, outer: IBoundingBox ) {
+    let xRatio = outer.dimensions.x / inner.dimensions.x
+    let yRatio = outer.dimensions.y / inner.dimensions.y
+    let minRatio = Math.min( xRatio, yRatio )
+    let dimensions = inner.dimensions.multiply( minRatio )
+    let room = outer.dimensions.subtract( dimensions )
+    let offset = room.half
+    return new BoundingBox( dimensions, outer.position.add( offset ) )
 }
 
 export interface IConstructor<T> {

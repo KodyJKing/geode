@@ -16,6 +16,9 @@ import * as _14 from "./math/Matrix"
 import * as _15 from "./math/Transform"
 import * as _16 from "./math/Vector"
 import * as _17 from "./util"
+import * as _18 from "./collision/BoundingBox"
+import * as _19 from "./Clock"
+import * as _20 from "./graphics/Animator"
 
 export default {
     _0,
@@ -35,5 +38,8 @@ export default {
     _14,
     _15,
     _16,
-    _17
+    _17,
+    _18,
+    _19,
+    _20
 }

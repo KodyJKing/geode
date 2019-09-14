@@ -1,5 +1,6 @@
 import Canvas from "./Canvas";
-import Vector from "../math/Vector";
+import Vector, { vector } from "../math/Vector";
+import IBoundingBox from "../collision/IBoundingBox";
 
 type ImageSource = {
     x: number,
@@ -8,22 +9,25 @@ type ImageSource = {
     h: number
 }
 
-export default class Sprite {
-    image: HTMLImageElement
-    w?: number
-    h?: number
-    source?: ImageSource
+export default class Sprite implements IBoundingBox {
+    readonly image: CanvasImageSource
+    private _dimensions?: Vector
+    private source?: ImageSource
+    private _center?: Vector
 
-    get width() { return this.w || this.image.width }
-    get height() { return this.h || this.image.height }
-
-    constructor( image: HTMLImageElement ) {
+    constructor( image: CanvasImageSource ) {
         this.image = image
     }
 
-    setDimensions( w, h ) {
-        this.w = w
-        this.h = h
+    get dimensions() { return this._dimensions || vector( this.image.width, this.image.height ) }
+    get position() { return Vector.ZERO }
+
+    get center() {
+        return this._center || this.dimensions.half
+    }
+
+    setDimensions( v: Vector ) {
+        this._dimensions = v
         return this
     }
 
@@ -32,12 +36,19 @@ export default class Sprite {
         return this
     }
 
-    draw( canvas: Canvas, x = 0, y = 0, center = false ) {
-        let { image, source, width, height } = this
+    setCenter( center: Vector ) {
+        this._center = center
+        return this
+    }
 
-        if ( center ) {
-            x -= width / 2
-            y -= height / 2
+    draw( canvas: Canvas, x = 0, y = 0, doCenter = false ) {
+        let { image, source, dimensions } = this
+        let { x: width, y: height } = dimensions
+
+        if ( doCenter ) {
+            let center = this.center
+            x -= center.x
+            y -= center.y
         }
 
         if ( source )

@@ -2,9 +2,9 @@ import IBoundingBox from "./IBoundingBox";
 import Vector from "../math/Vector";
 
 const left = ( b: IBoundingBox ) => b.position.x
-const right = ( b: IBoundingBox ) => b.position.x + b.width
+const right = ( b: IBoundingBox ) => b.position.x + b.dimensions.x
 const top = ( b: IBoundingBox ) => b.position.y
-const bottom = ( b: IBoundingBox ) => b.position.y + b.height
+const bottom = ( b: IBoundingBox ) => b.position.y + b.dimensions.y
 
 export function boxContains( b: IBoundingBox, p: Vector ) {
     let xContains = contains( left( b ), right( b ), p.x )
