@@ -1,3 +1,4 @@
+const maxDt = 50
 export default class Clock {
     private pausedAt?
     private _time = 0
@@ -7,7 +8,8 @@ export default class Clock {
     get dt() { return this._dt }
 
     tick() {
-        this._dt = ( this.pausedAt || performance.now() ) - this._time
+        let actualDt = ( this.pausedAt || performance.now() ) - this._time
+        this._dt = Math.min( actualDt, maxDt )
         this._time += this.dt
     }
 
