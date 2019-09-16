@@ -26,3 +26,7 @@ export function getImage( path: string ) {
 export function getAudio( path: string ) {
     return getAsset( assetPath( "audio/" + path, "mp3" ), path => new Audio( path ) ) as HTMLAudioElement
 }
+
+export function isFontLoaded( font: string ) {
+    return ( document as any ).fonts.check( "0px " + font )
+}
