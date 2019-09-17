@@ -51,6 +51,14 @@ export default class Canvas {
         this.context = this.canvas.getContext( "2d" ) as CanvasRenderingContext2D
     }
 
+    get dimensions() {
+        return new Vector( this.width, this.height )
+    }
+
+    get center() {
+        return this.dimensions.half
+    }
+
     resize( w, h, pixelDensity = 1 ) {
         this.width = w
         this.height = h
@@ -61,24 +69,19 @@ export default class Canvas {
         this.canvas.width = w * pixelDensity
         this.canvas.height = h * pixelDensity
         this.scale( pixelDensity, pixelDensity )
-    }
-
-    get dimensions() {
-        return new Vector( this.width, this.height )
-    }
-
-    get center() {
-        return this.dimensions.half
+        return this
     }
 
     fitWindow( pixelDensity = 1 ) {
         this.resize( innerWidth, innerHeight, pixelDensity )
+        return this
+
     }
 
     background( style: FillStyle ) {
-        let { canvas, context: c } = this
+        let { canvas, context: c, width, height } = this
         c.fillStyle = coerceFillStyle( style )
-        c.fillRect( 0, 0, canvas.width, canvas.height )
+        c.fillRect( 0, 0, width, height )
         return this
     }
 
@@ -92,9 +95,13 @@ export default class Canvas {
         return this
     }
 
-    vrect( p: Vector, dimensions: Vector ) { this.rect( p.x, p.y, dimensions.x, dimensions.y ); return this }
-    rect( x, y, w, h ) {
+    vrect( p: Vector, dimensions: Vector, center = false ) { this.rect( p.x, p.y, dimensions.x, dimensions.y, center ); return this }
+    rect( x, y, w, h, center = false ) {
         let { context: c } = this
+        if ( center ) {
+            x -= w / 2
+            y -= h / 2
+        }
         c.beginPath()
         c.rect( x, y, w, h )
         c.closePath()
@@ -173,11 +180,18 @@ export default class Canvas {
         return this
     }
 
-    vimage( image, p: Vector, dimensions: Vector = Vector.ZERO ) { this.image( image, p.x, p.y, dimensions.x, dimensions.y ); return this }
-    image( image, dx = 0, dy = 0, w = 0, h = 0 ) {
-        if ( image.width == 0 ) return
-        w = w || image.width
-        h = h || image.height
+    vimage( image, p: Vector, dimensions: Vector = Vector.ZERO, center = false ) { this.image( image, p.x, p.y, dimensions.x, dimensions.y, center ); return this }
+    image( image, dx = 0, dy = 0, w = 0, h = 0, center = false ) {
+        if ( image.width == 0 ) return this
+        if ( center ) {
+            w = image.width
+            h = image.height
+            dx -= w / 2
+            dy -= h / 2
+        } else {
+            w = w || image.width
+            h = h || image.height
+        }
         this.context.drawImage( image, dx, dy, w, h )
         return this
     }
