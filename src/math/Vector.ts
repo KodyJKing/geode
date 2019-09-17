@@ -41,6 +41,10 @@ export default class Vector {
     divide( divisor: number ) { return new Vector( this.x / divisor, this.y / divisor ) }
     lerp( other: Vector, t: number ) { return this.multiply( 1 - t ).add( other.multiply( t ) ) }
 
+    rotated( angle: number ) {
+        return this.complexProduct( Vector.polar(angle, 1) )
+    }
+
     isRightOf( other: Vector ) {
         return this.cross(other) > 0
     }
