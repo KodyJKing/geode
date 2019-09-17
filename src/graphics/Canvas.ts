@@ -85,6 +85,11 @@ export default class Canvas {
         return this
     }
 
+    clear() {
+        this.context.clearRect( 0, 0, this.width, this.height )
+        return this
+    }
+
     vline( a: Vector, b: Vector ) { this.line( a.x, a.y, b.x, b.y ); return this }
     line( x1, y1, x2, y2 ) {
         let { context: c } = this
@@ -134,6 +139,11 @@ export default class Canvas {
 
     fillStyle( style: FillStyle ) {
         this.context.fillStyle = coerceFillStyle( style )
+        return this
+    }
+
+    lineWidth( width: number ) {
+        this.context.lineWidth = width
         return this
     }
 
@@ -222,6 +232,11 @@ export default class Canvas {
         return this
     }
 
+    translateToCenter() {
+        this.vtranslate( this.dimensions.half )
+        return this
+    }
+
     rotate( angle ) {
         this.context.rotate( angle )
         return this
@@ -277,7 +292,7 @@ export default class Canvas {
         return this
     }
 
-    closedPath( coords: number[] ) {
+    path( coords: number[] ) {
         this.context.beginPath()
         for ( let i = 0; i < coords.length; i += 2 ) {
             let x = coords[ i ]
@@ -287,9 +302,21 @@ export default class Canvas {
             else
                 this.context.lineTo( x, y )
         }
-        this.context.closePath()
         return this
     }
+
+    vpath( points: Vector[] ) {
+        this.context.beginPath()
+        let i = 0
+        for ( let p of points ) {
+            if ( i++ == 0 )
+                this.context.moveTo( p.x, p.y )
+            else
+                this.context.lineTo( p.x, p.y )
+        }
+        return this
+    }
+
 
     gradient( from: Vector, to: Vector, colors: [ number, Color | string ][] ) {
         let grad = this.context.createLinearGradient( from.x, from.y, to.x, to.y )

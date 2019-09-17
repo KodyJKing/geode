@@ -43,6 +43,19 @@ export function fitBox( inner: IBoundingBox, outer: IBoundingBox ) {
     return new BoundingBox( dimensions, outer.position.add( offset ) )
 }
 
+export function argmax<T>( values: T[], func: ( arg: T ) => number ) {
+    let best = func( values[ 0 ] )
+    let bestIndex = 0
+    for ( let i = 0; i < values.length; i++ ) {
+        let score = func( values[ i ] )
+        if ( score > best ) {
+            best = score
+            bestIndex = i
+        }
+    }
+    return { best, bestIndex, bestArg: values[ bestIndex ] }
+}
+
 export interface IConstructor<T> {
     new(): T
 }

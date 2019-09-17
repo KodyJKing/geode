@@ -37,8 +37,19 @@ export default class Vector {
     dot( other: Vector ) { return this.x * other.x + this.y * other.y }
     cross( other: Vector ) { return this.x * other.y - this.y * other.x }
     multiply( scale: number ) { return new Vector( this.x * scale, this.y * scale ) }
+    stretch( x: number, y: number ) { return new Vector( this.x * x, this.y * y ) }
     divide( divisor: number ) { return new Vector( this.x / divisor, this.y / divisor ) }
     lerp( other: Vector, t: number ) { return this.multiply( 1 - t ).add( other.multiply( t ) ) }
+
+    isRightOf( other: Vector ) {
+        return this.cross(other) > 0
+    }
+    
+    normalOnSide( side: Vector ) {
+        if ( side.isRightOf( this ) )
+            return this.rightNormal
+        return this.leftNormal
+    }
 
     *[ Symbol.iterator ]() {
         yield this.x
