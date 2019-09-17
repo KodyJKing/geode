@@ -19,12 +19,12 @@ export default class Animator {
     }
 
     private getSprite( time: number ) {
-        let { startTime } = this
-        if ( startTime && time < startTime + this.playTime ) {
-            return this.sheet.frameAtPercent( this.getPercent( this.clock.time ) )
+        let { startTime, playTime, sheet } = this
+        if ( startTime && time < startTime + playTime ) {
+            return sheet.frameAtPercent( this.getPercent( time ) )
         } else {
             this.stop()
-            return this.sheet.frame( 0 )
+            return sheet.frame( 0 )
         }
     }
 
