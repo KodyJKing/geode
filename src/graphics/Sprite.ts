@@ -1,6 +1,6 @@
 import Canvas from "./Canvas";
 import Vector, { vector } from "../math/Vector";
-import IBoundingBox from "../collision/IBoundingBox";
+import IBoundingBox from "../math/geometry/IBoundingBox";
 
 type ImageSource = {
     x: number,

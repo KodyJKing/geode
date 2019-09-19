@@ -1,6 +1,6 @@
-import IBoundingBox from "./collision/IBoundingBox"
+import IBoundingBox from "./math/geometry/IBoundingBox"
 import Vector, { vector } from "./math/Vector"
-import BoundingBox from "./collision/BoundingBox"
+import BoundingBox from "./math/geometry/BoundingBox"
 
 export function frozen<T>( obj: T ) {
     return Object.freeze( obj ) as T

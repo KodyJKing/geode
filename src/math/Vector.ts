@@ -42,13 +42,13 @@ export default class Vector {
     lerp( other: Vector, t: number ) { return this.multiply( 1 - t ).add( other.multiply( t ) ) }
 
     rotated( angle: number ) {
-        return this.complexProduct( Vector.polar(angle, 1) )
+        return this.complexProduct( Vector.polar( angle, 1 ) )
     }
 
     isRightOf( other: Vector ) {
-        return this.cross(other) > 0
+        return this.cross( other ) > 0
     }
-    
+
     normalOnSide( side: Vector ) {
         if ( side.isRightOf( this ) )
             return this.rightNormal
@@ -76,6 +76,15 @@ export default class Vector {
     get complexExponential() {
         let magnitude = Math.exp( this.x )
         return new Vector( magnitude * Math.cos( this.y ), magnitude * Math.sin( this.y ) )
+    }
+
+    projection(other: Vector) {
+        return other.multiply( other.dot(this) / other.lengthSquared )
+    }
+
+    equivalent( other: Vector, epsilon = 0.000001 ) {
+        return GMath.equalivalent( this.x, other.x, epsilon ) &&
+            GMath.equalivalent( this.y, other.y, epsilon )
     }
 
     static polar( angle, length ) {

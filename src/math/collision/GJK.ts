@@ -1,6 +1,7 @@
-import Vector from "../math/Vector"
+import Vector from "../Vector"
+import SupportFunction from "./SupportFunction"
 
-export default function GJK( support: ( v: Vector ) => Vector, simplices?: Vector[][], maxIterations = 100, initialHeading = Vector.RIGHT ) {
+export default function GJK( support: SupportFunction, simplices?: Vector[][], maxIterations = 100, initialHeading = Vector.RIGHT ) {
     let initialPoint = support( initialHeading )
     let heading = initialPoint.negate
     let simplex: Vector[] = [ initialPoint ]

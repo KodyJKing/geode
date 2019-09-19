@@ -1,5 +1,5 @@
 import test from "ava"
-import Vector from "../../math/Vector"
+import Vector from "../../Vector"
 import GJK from "../GJK"
 
 test( "GJK", assert => {

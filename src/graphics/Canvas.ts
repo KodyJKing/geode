@@ -31,8 +31,9 @@ export default class Canvas {
     canvas: HTMLCanvasElement | OffscreenCanvas
     context: CanvasRenderingContext2D
 
-    width = window.innerWidth
-    height = window.innerHeight
+    width: number
+    height: number
+    pixelDensity = 1
 
     private _imageSource = {
         x: 0, y: 0,
@@ -49,6 +50,8 @@ export default class Canvas {
         }
         this.canvas = canvas
         this.context = this.canvas.getContext( "2d" ) as CanvasRenderingContext2D
+        this.width = canvas.width
+        this.height = canvas.height
     }
 
     get dimensions() {
@@ -68,6 +71,7 @@ export default class Canvas {
         }
         this.canvas.width = w * pixelDensity
         this.canvas.height = h * pixelDensity
+        this.pixelDensity = pixelDensity
         this.scale( pixelDensity, pixelDensity )
         return this
     }
@@ -88,6 +92,12 @@ export default class Canvas {
     clear() {
         this.context.clearRect( 0, 0, this.width, this.height )
         return this
+    }
+
+    reset() {
+        this.context.resetTransform()
+        this.scale( this.pixelDensity, this.pixelDensity )
+        this.clear()
     }
 
     vline( a: Vector, b: Vector ) { this.line( a.x, a.y, b.x, b.y ); return this }

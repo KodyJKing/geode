@@ -41,4 +41,8 @@ export default class GMath {
         return f( Math.abs( x ) / softness ) * softness * Math.sign( x )
     }
 
+    static equalivalent( a: number, b: number, epsilon = 0.000001 ) {
+        return Math.abs( a - b ) <= epsilon
+    }
+
 }
