@@ -1,5 +1,5 @@
-import IBoundingBox from "../geometry/IBoundingBox";
-import Vector from "../Vector";
+import IBoundingBox from "../geometry/IBoundingBox"
+import Vector from "../Vector"
 
 const left = ( b: IBoundingBox ) => b.position.x
 const right = ( b: IBoundingBox ) => b.position.x + b.dimensions.x

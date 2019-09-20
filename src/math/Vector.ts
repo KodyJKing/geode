@@ -1,4 +1,4 @@
-import GMath from "./GMath";
+import GMath from "./GMath"
 
 export function vector( x, y ) { return new Vector( x, y ) }
 export default class Vector {

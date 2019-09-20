@@ -1,4 +1,4 @@
-import { audioInstance } from "./audio";
+import { audioInstance } from "./audio"
 
 const cache = {}
 export function getAsset( path: string, fromPath: ( string ) => any ) {

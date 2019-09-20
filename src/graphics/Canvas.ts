@@ -1,7 +1,7 @@
-import Vector from "../math/Vector";
-import Transform from "../math/Transform";
-import Color from "./Color";
-import { camelToDashes } from "../util";
+import Vector from "../math/Vector"
+import Transform from "../math/Transform"
+import Color from "./Color"
+import { camelToDashes } from "../util"
 
 type FilterOptions = {
     blur?: number,

@@ -1,10 +1,9 @@
-import Vector, { vector } from "../math/Vector";
-
-import { boxContains, boxOverlaps } from "../math/collision/collision";
-import Transform from "../math/Transform";
-import Scene from "./Scene";
-import Component from "./Component";
-import Canvas from "../graphics/Canvas";
+import Vector, { vector } from "../math/Vector"
+import { boxContains, boxOverlaps } from "../math/collision/collision"
+import Transform from "../math/Transform"
+import Scene from "./Scene"
+import Component from "./Component"
+import Canvas from "../graphics/Canvas"
 
 export default class GameObject {
     layer: number = 0

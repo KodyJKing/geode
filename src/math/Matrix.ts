@@ -1,4 +1,4 @@
-import Vector from "./Vector";
+import Vector from "./Vector"
 
 export default class Matrix {
     xx = 0; xy = 0

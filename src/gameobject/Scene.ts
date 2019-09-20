@@ -1,10 +1,10 @@
-import Transform from "../math/Transform";
-import GameObject from "./GameObject";
-import Input from "../Input";
-import Vector from "../math/Vector";
-import Canvas from "../graphics/Canvas";
-import IBoundingBox from "../math/geometry/IBoundingBox";
-import { boxOverlaps } from "../math/collision/collision";
+import Transform from "../math/Transform"
+import GameObject from "./GameObject"
+import Input from "../Input"
+import Vector from "../math/Vector"
+import Canvas from "../graphics/Canvas"
+import IBoundingBox from "../math/geometry/IBoundingBox"
+import { boxOverlaps } from "../math/collision/collision"
 
 type layerCompareFunction = ( a: GameObject, b: GameObject ) => number
 const defaultCompare = ( a: GameObject, b: GameObject ) => a.layer - b.layer

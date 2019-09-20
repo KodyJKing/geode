@@ -1,6 +1,6 @@
-import Vector, { vector } from "../Vector";
-import { argmax } from "../../util";
-import GMath from "../GMath";
+import Vector, { vector } from "../Vector"
+import { argmax } from "../../util"
+import GMath from "../GMath"
 
 export default class Polygon {
 

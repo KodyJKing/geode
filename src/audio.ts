@@ -1,4 +1,4 @@
-import { getAudio } from "./assets";
+import { getAudio } from "./assets"
 
 type AudioOptions = { volume?: number, playbackRate?: number }
 

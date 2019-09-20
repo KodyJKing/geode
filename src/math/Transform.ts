@@ -1,5 +1,5 @@
-import Vector, { vector } from "./Vector";
-import Matrix from "./Matrix";
+import Vector, { vector } from "./Vector"
+import Matrix from "./Matrix"
 
 export default class Transform {
     position: Vector

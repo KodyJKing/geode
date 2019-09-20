@@ -1,5 +1,5 @@
-import Vector, { vector } from "./math/Vector";
-import Canvas from "./graphics/Canvas";
+import Vector, { vector } from "./math/Vector"
+import Canvas from "./graphics/Canvas"
 
 window.addEventListener( "mousemove", e => { Input.mouse = vector( e.x, e.y ) } )
 

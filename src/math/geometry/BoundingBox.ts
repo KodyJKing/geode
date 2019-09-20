@@ -1,5 +1,5 @@
-import IBoundingBox from "./IBoundingBox";
-import Vector from "../Vector";
+import IBoundingBox from "./IBoundingBox"
+import Vector from "../Vector"
 export default class BoundingBox implements IBoundingBox {
     dimensions: Vector
     position: Vector

@@ -1,5 +1,5 @@
-import Vector from "../Vector";
-import Ray from "./Ray";
+import Vector from "../Vector"
+import Ray from "./Ray"
 
 export default class Line {
     a: Vector

@@ -1,5 +1,5 @@
-import Sprite from "./Sprite";
-import Vector, { vector } from "../math/Vector";
+import Sprite from "./Sprite"
+import Vector, { vector } from "../math/Vector"
 
 type SpriteSheetArgs = {
     image: HTMLImageElement | ImageBitmap
