@@ -19,7 +19,6 @@
         "ava": "^2.2.0"
     },
     "dependencies": {
-        "@types/offscreencanvas": "^2019.6.0",
         "liberate": "https://github.com/KodyJKing/liberate.git"
     }
 }
