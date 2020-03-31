@@ -2,6 +2,7 @@ import Vector from "../math/Vector"
 import Transform from "../math/Transform"
 import Color from "./Color"
 import { camelToDashes } from "../util"
+import Matrix3 from "../math/Matrix3"
 
 type FilterOptions = {
     blur?: number,
@@ -217,7 +218,7 @@ export default class Canvas {
     }
 
     vpartialImage( image, p: Vector, dimensions: Vector ) { this.partialImage( image, p.x, p.y, dimensions.x, dimensions.y ); return this }
-    partialImage( image, x, y, w, h ) {
+    partialImage( image, x = 0, y = 0, w = 0, h = 0 ) {
         let { _imageSource: imageSource } = this
         w = w || imageSource.w
         h = h || imageSource.h
@@ -283,6 +284,12 @@ export default class Canvas {
             this.inverseTransform( t.parent )
         return this
     }
+
+    applyMatrix( mat: Matrix3 ) {
+        let { m11, m12, m13, m21, m22, m23 } = mat
+        this.context.transform( m11, m21, m12, m22, m13, m23 )
+    }
+
 
     vtext( text, p: Vector, width, font = "50px pixel" ) { this.text( text, p.x, p.y, width, font ); return this }
     text( text, x, y, width, font = "50px pixel" ) {

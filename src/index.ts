@@ -23,9 +23,11 @@ import * as _24 from "./math/geometry/Polygon"
 import * as _25 from "./math/geometry/Ray"
 import * as _26 from "./math/GMath"
 import * as _27 from "./math/Matrix"
-import * as _30 from "./math/Transform"
-import * as _31 from "./math/Vector"
-import * as _32 from "./util"
+import * as _29 from "./math/Matrix3"
+import * as _32 from "./math/Transform"
+import * as _33 from "./math/Vector"
+import * as _34 from "./math/Vector3"
+import * as _35 from "./util"
 
 export default {
     _0,
@@ -53,7 +55,9 @@ export default {
     _25,
     _26,
     _27,
-    _30,
-    _31,
-    _32
+    _29,
+    _32,
+    _33,
+    _34,
+    _35
 }
