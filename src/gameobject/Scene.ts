@@ -1,7 +1,7 @@
 import Transform from "../math/Transform"
 import GameObject from "./GameObject"
 import Input from "../Input"
-import Vector from "../math/Vector"
+import Vector2 from "../math/Vector2"
 import Canvas from "../graphics/Canvas"
 import IBoundingBox from "../math/geometry/IBoundingBox"
 import { boxOverlaps } from "../math/collision/collision"
@@ -21,10 +21,10 @@ export default class Scene {
             this.add( obj )
     }
 
-    screneToWorldPoint( point: Vector ) { return this.cameraTransform.transformPoint( point ) }
-    screneToWorldVector( vector: Vector ) { return this.cameraTransform.transformVector( vector ) }
-    worldToScrenePoint( point: Vector ) { return this.cameraTransform.inverseTransformPoint( point ) }
-    worldToScreneVector( vector: Vector ) { return this.cameraTransform.inverseTransformVector( vector ) }
+    screneToWorldPoint( point: Vector2 ) { return this.cameraTransform.transformPoint( point ) }
+    screneToWorldVector( vector: Vector2 ) { return this.cameraTransform.transformVector( vector ) }
+    worldToScrenePoint( point: Vector2 ) { return this.cameraTransform.inverseTransformPoint( point ) }
+    worldToScreneVector( vector: Vector2 ) { return this.cameraTransform.inverseTransformVector( vector ) }
 
     get mousePosition() { return this.screneToWorldPoint( Input.mouseScreenPosition( this.canvas ) ) }
 

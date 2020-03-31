@@ -1,5 +1,5 @@
-import Vector from "../Vector"
+import Vector2 from "../Vector2"
 export default interface IBoundingBox {
-    position: Vector
-    dimensions: Vector
+    position: Vector2
+    dimensions: Vector2
 }

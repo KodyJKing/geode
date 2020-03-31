@@ -1,5 +1,5 @@
 import IBoundingBox from "./math/geometry/IBoundingBox"
-import Vector, { vector } from "./math/Vector"
+import Vector2, { vector } from "./math/Vector2"
 import BoundingBox from "./math/geometry/BoundingBox"
 
 export function frozen<T>( obj: T ) {
@@ -39,7 +39,7 @@ export function fitBox( inner: IBoundingBox, outer: IBoundingBox ) {
     let minRatio = Math.min( xRatio, yRatio )
     let dimensions = inner.dimensions.multiply( minRatio )
     let room = outer.dimensions.subtract( dimensions )
-    let offset = room.half
+    let offset = room.half()
     return new BoundingBox( dimensions, outer.position.add( offset ) )
 }
 

@@ -1,9 +1,9 @@
 import IBoundingBox from "./IBoundingBox"
-import Vector from "../Vector"
+import Vector2 from "../Vector2"
 export default class BoundingBox implements IBoundingBox {
-    dimensions: Vector
-    position: Vector
-    constructor( dimensions: Vector, position = Vector.ZERO ) {
+    dimensions: Vector2
+    position: Vector2
+    constructor( dimensions: Vector2, position = Vector2.ZERO ) {
         this.dimensions = dimensions
         this.position = position
     }

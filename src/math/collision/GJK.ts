@@ -1,26 +1,26 @@
-import Vector from "../Vector"
+import Vector2 from "../Vector2"
 import SupportFunction from "./SupportFunction"
 
-export default function GJK( support: SupportFunction, simplices?: Vector[][], maxIterations = 100, initialHeading = Vector.RIGHT ) {
+export default function GJK( support: SupportFunction, simplices?: Vector2[][], maxIterations = 100, initialHeading = Vector2.RIGHT ) {
     let initialPoint = support( initialHeading )
-    let heading = initialPoint.negate
-    let simplex: Vector[] = [ initialPoint ]
+    let heading = initialPoint.negate()
+    let simplex: Vector2[] = [ initialPoint ]
 
     function checkAndUpdateSimplex() {
         if ( simplices )
-            simplices.push(simplex.slice())
+            simplices.push( simplex.slice() )
 
         switch ( simplex.length ) {
 
             case 1: {
-                heading = simplex[ 0 ].negate
+                heading = simplex[ 0 ].negate()
                 return false
             }
 
             case 2: {
                 let [ b, a ] = simplex
                 let ab = b.subtract( a )
-                let ao = a.negate
+                let ao = a.negate()
                 if ( ab.dot( ao ) < 0 ) {
                     heading = ao
                     simplex = [ a ]
@@ -35,19 +35,19 @@ export default function GJK( support: SupportFunction, simplices?: Vector[][], m
                 let [ c, b, a ] = simplex
                 let ab = b.subtract( a )
                 let ac = c.subtract( a )
-                let ao = a.negate
+                let ao = a.negate()
 
                 let inAB = ab.dot( ao ) > 0
                 let inAC = ac.dot( ao ) > 0
 
                 if ( !inAB && !inAC ) {
                     heading = ao
-                    simplex = [a]
+                    simplex = [ a ]
                     return false
                 }
 
-                let abNormal = ab.normalOnSide( ac ).negate
-                let acNormal = ac.normalOnSide( ab ).negate
+                let abNormal = ab.normalOnSide( ac ).negate()
+                let acNormal = ac.normalOnSide( ab ).negate()
 
                 let belowAB = abNormal.dot( ao ) < 0
                 let belowAC = acNormal.dot( ao ) < 0
@@ -55,9 +55,9 @@ export default function GJK( support: SupportFunction, simplices?: Vector[][], m
                 if ( belowAB && belowAC )
                     return true
 
-                if ( inAB && !belowAB) {
+                if ( inAB && !belowAB ) {
                     heading = abNormal
-                    simplex = [b, a]
+                    simplex = [ b, a ]
                     return false
                 }
 
@@ -70,7 +70,7 @@ export default function GJK( support: SupportFunction, simplices?: Vector[][], m
 
     let i = 0
     while ( true ) {
-        if ( ++i > maxIterations)
+        if ( ++i > maxIterations )
             return false
         let nextVertex = support( heading )
         if ( nextVertex.dot( heading ) < 0 )

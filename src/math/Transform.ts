@@ -1,14 +1,15 @@
-import Vector, { vector } from "./Vector"
-import Matrix from "./Matrix"
+import Vector2, { vector } from "./Vector2"
+import Matrix2 from "./Matrix2"
 
+// Todo: replace deprecated Matrix2 with Matrix3
 export default class Transform {
-    position: Vector
+    position: Vector2
     rotation: number
-    scale: Vector
-    center: Vector
+    scale: Vector2
+    center: Vector2
     parent?: Transform
 
-    constructor( position = new Vector( 0, 0 ), rotation = 0, scale = new Vector( 1, 1 ), center = new Vector( 0, 0 ), parent?: Transform ) {
+    constructor( position = new Vector2( 0, 0 ), rotation = 0, scale = new Vector2( 1, 1 ), center = new Vector2( 0, 0 ), parent?: Transform ) {
         this.position = position
         this.rotation = rotation
         this.scale = scale
@@ -16,42 +17,42 @@ export default class Transform {
         this.parent = parent
     }
 
-    get localMatrix(): Matrix {
-        return Matrix.translation( this.position.x, this.position.y )
-            .multiplyMatrix( Matrix.rotation( this.rotation ) )
-            .multiplyMatrix( Matrix.scale( this.scale.x, this.scale.y ) )
-            .multiplyMatrix( Matrix.translation( - this.center.x, - this.center.y ) )
+    get localMatrix(): Matrix2 {
+        return Matrix2.translation( this.position.x, this.position.y )
+            .multiplyMatrix( Matrix2.rotation( this.rotation ) )
+            .multiplyMatrix( Matrix2.scale( this.scale.x, this.scale.y ) )
+            .multiplyMatrix( Matrix2.translation( - this.center.x, - this.center.y ) )
     }
 
-    get localInverseMatrix(): Matrix {
-        return Matrix.translation( this.center.x, this.center.y )
-            .multiplyMatrix( Matrix.scale( 1 / this.scale.x, 1 / this.scale.y ) )
-            .multiplyMatrix( Matrix.rotation( -this.rotation ) )
-            .multiplyMatrix( Matrix.translation( - this.position.x, - this.position.y ) )
+    get localInverseMatrix(): Matrix2 {
+        return Matrix2.translation( this.center.x, this.center.y )
+            .multiplyMatrix( Matrix2.scale( 1 / this.scale.x, 1 / this.scale.y ) )
+            .multiplyMatrix( Matrix2.rotation( -this.rotation ) )
+            .multiplyMatrix( Matrix2.translation( - this.position.x, - this.position.y ) )
     }
 
-    get matrix(): Matrix {
+    get matrix(): Matrix2 {
         let m = this.localMatrix
         return this.parent ?
             this.parent.matrix.multiplyMatrix( m ) :
             m
     }
 
-    get inverseMatrix(): Matrix {
+    get inverseMatrix(): Matrix2 {
         let m = this.localInverseMatrix
         return this.parent ?
             m.multiplyMatrix( this.parent.inverseMatrix ) :
             m
     }
 
-    transformVector( v: Vector ) { return this.matrix.multiplyVector( v ) }
-    transformPoint( v: Vector ) { return this.matrix.multiplyPoint( v ) }
-    inverseTransformVector( v: Vector ) { return this.inverseMatrix.multiplyVector( v ) }
-    inverseTransformPoint( v: Vector ) { return this.inverseMatrix.multiplyPoint( v ) }
+    transformVector( v: Vector2 ) { return this.matrix.multiplyVector( v ) }
+    transformPoint( v: Vector2 ) { return this.matrix.multiplyPoint( v ) }
+    inverseTransformVector( v: Vector2 ) { return this.inverseMatrix.multiplyVector( v ) }
+    inverseTransformPoint( v: Vector2 ) { return this.inverseMatrix.multiplyPoint( v ) }
 
-    vectorToWorld( v: Vector ) { return this.transformVector( v ) }
-    pointToWorld( v: Vector ) { return this.transformPoint( v ) }
-    vectorToLocal( v: Vector ) { return this.inverseTransformVector( v ) }
-    pointToLocal( v: Vector ) { return this.inverseTransformPoint( v ) }
+    vectorToWorld( v: Vector2 ) { return this.transformVector( v ) }
+    pointToWorld( v: Vector2 ) { return this.transformPoint( v ) }
+    vectorToLocal( v: Vector2 ) { return this.inverseTransformVector( v ) }
+    pointToLocal( v: Vector2 ) { return this.inverseTransformPoint( v ) }
 
 }

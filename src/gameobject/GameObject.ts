@@ -1,4 +1,4 @@
-import Vector, { vector } from "../math/Vector"
+import Vector2, { vector } from "../math/Vector2"
 import { boxContains, boxOverlaps } from "../math/collision/collision"
 import Transform from "../math/Transform"
 import Scene from "./Scene"
@@ -16,21 +16,21 @@ export default class GameObject {
     // components: Set<Component> = new Set<Component>()
 
     get position() { return this.transform.position }
-    set position( value: Vector ) { this.transform.position = value }
+    set position( value: Vector2 ) { this.transform.position = value }
 
     get rotation() { return this.transform.rotation }
     set rotation( value: number ) { this.transform.rotation = value }
 
     get dimensions() { return vector( this.width, this.height ) }
-    get center() { return this.position.add( this.dimensions.half ) }
+    get center() { return this.position.add( this.dimensions.half() ) }
 
-    constructor( position: Vector = Vector.ZERO, width = 0, height = 0 ) {
+    constructor( position: Vector2 = Vector2.ZERO, width = 0, height = 0 ) {
         this.position = position
         this.width = width
         this.height = height
     }
 
-    contains( p: Vector ) { return boxContains( this, p ) }
+    contains( p: Vector2 ) { return boxContains( this, p ) }
     overlaps( other: GameObject ) { return boxOverlaps( this, other ) }
 
     onRender( canvas: Canvas, scene: Scene ) { }

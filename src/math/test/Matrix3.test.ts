@@ -1,5 +1,5 @@
 import test from "ava"
-import Matrix3 from "./Matrix3"
+import Matrix3 from "../Matrix3"
 
 test( "Matrix3", t => {
     let m = Matrix3.translation( 10, 15 ).multiply( Matrix3.scale( 2, 2 ) )

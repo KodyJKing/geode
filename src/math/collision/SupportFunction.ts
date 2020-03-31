@@ -1,3 +1,3 @@
-import Vector from "../Vector"
-type SupportFunction = ( v: Vector ) => Vector
+import Vector2 from "../Vector2"
+type SupportFunction = ( v: Vector2 ) => Vector2
 export default SupportFunction

@@ -1,5 +1,5 @@
 import Canvas from "./Canvas"
-import Vector, { vector } from "../math/Vector"
+import Vector2, { vector } from "../math/Vector2"
 import IBoundingBox from "../math/geometry/IBoundingBox"
 
 type ImageSource = {
@@ -11,22 +11,22 @@ type ImageSource = {
 
 export default class Sprite implements IBoundingBox {
     readonly image: CanvasImageSource
-    private _dimensions?: Vector
+    private _dimensions?: Vector2
     private source?: ImageSource
-    private _center?: Vector
+    private _center?: Vector2
 
     constructor( image: CanvasImageSource ) {
         this.image = image
     }
 
     get dimensions() { return this._dimensions || vector( this.image.width, this.image.height ) }
-    get position() { return Vector.ZERO }
+    get position() { return Vector2.ZERO }
 
     get center() {
-        return this._center || this.dimensions.half
+        return this._center || this.dimensions.half()
     }
 
-    setDimensions( v: Vector ) {
+    setDimensions( v: Vector2 ) {
         this._dimensions = v
         return this
     }
@@ -36,7 +36,7 @@ export default class Sprite implements IBoundingBox {
         return this
     }
 
-    setCenter( center: Vector ) {
+    setCenter( center: Vector2 ) {
         this._center = center
         return this
     }
@@ -57,7 +57,7 @@ export default class Sprite implements IBoundingBox {
             canvas.image( image, x, y, width, height )
     }
 
-    vdraw( canvas: Canvas, v: Vector, center = false ) {
+    vdraw( canvas: Canvas, v: Vector2, center = false ) {
         this.draw( canvas, v.x, v.y )
     }
 }

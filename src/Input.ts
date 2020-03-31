@@ -1,4 +1,4 @@
-import Vector, { vector } from "./math/Vector"
+import Vector2, { vector } from "./math/Vector2"
 import Canvas from "./graphics/Canvas"
 
 window.addEventListener( "mousemove", e => { Input.mouse = vector( e.x, e.y ) } )
@@ -10,7 +10,7 @@ window.addEventListener( "mousedown", e => Input.buttons[ "Mouse" + e.button ] =
 window.addEventListener( "mouseup", e => Input.buttons[ "Mouse" + e.button ] = false )
 
 export default class Input {
-    static mouse = Vector.ZERO
+    static mouse = Vector2.ZERO
     static buttons: { [ name: string ]: boolean } = {}
     static mouseScreenPosition( canvas: HTMLCanvasElement | Canvas ) {
         if ( canvas instanceof Canvas )

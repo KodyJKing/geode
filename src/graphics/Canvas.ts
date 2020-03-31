@@ -1,4 +1,4 @@
-import Vector from "../math/Vector"
+import Vector2 from "../math/Vector2"
 import Transform from "../math/Transform"
 import Color from "./Color"
 import { camelToDashes } from "../util"
@@ -56,11 +56,11 @@ export default class Canvas {
     }
 
     get dimensions() {
-        return new Vector( this.width, this.height )
+        return new Vector2( this.width, this.height )
     }
 
     get center() {
-        return this.dimensions.half
+        return this.dimensions.half()
     }
 
     resize( w, h, pixelDensity = 1 ) {
@@ -101,7 +101,7 @@ export default class Canvas {
         this.clear()
     }
 
-    vline( a: Vector, b: Vector ) { this.line( a.x, a.y, b.x, b.y ); return this }
+    vline( a: Vector2, b: Vector2 ) { this.line( a.x, a.y, b.x, b.y ); return this }
     line( x1, y1, x2, y2 ) {
         let { context: c } = this
         c.beginPath()
@@ -111,7 +111,7 @@ export default class Canvas {
         return this
     }
 
-    vrect( p: Vector, dimensions: Vector, center = false ) { this.rect( p.x, p.y, dimensions.x, dimensions.y, center ); return this }
+    vrect( p: Vector2, dimensions: Vector2, center = false ) { this.rect( p.x, p.y, dimensions.x, dimensions.y, center ); return this }
     rect( x, y, w, h, center = false ) {
         let { context: c } = this
         if ( center ) {
@@ -124,7 +124,7 @@ export default class Canvas {
         return this
     }
 
-    vcircle( p: Vector, r ) { this.circle( p.x, p.y, r ); return this }
+    vcircle( p: Vector2, r ) { this.circle( p.x, p.y, r ); return this }
     circle( x, y, r ) {
         let { context: c } = this
         c.beginPath()
@@ -201,7 +201,7 @@ export default class Canvas {
         return this
     }
 
-    vimage( image, p: Vector, dimensions: Vector = Vector.ZERO, center = false ) { this.image( image, p.x, p.y, dimensions.x, dimensions.y, center ); return this }
+    vimage( image, p: Vector2, dimensions: Vector2 = Vector2.ZERO, center = false ) { this.image( image, p.x, p.y, dimensions.x, dimensions.y, center ); return this }
     image( image, dx = 0, dy = 0, w = 0, h = 0, center = false ) {
         if ( image.width == 0 ) return this
         if ( center ) {
@@ -217,7 +217,7 @@ export default class Canvas {
         return this
     }
 
-    vpartialImage( image, p: Vector, dimensions: Vector ) { this.partialImage( image, p.x, p.y, dimensions.x, dimensions.y ); return this }
+    vpartialImage( image, p: Vector2, dimensions: Vector2 ) { this.partialImage( image, p.x, p.y, dimensions.x, dimensions.y ); return this }
     partialImage( image, x = 0, y = 0, w = 0, h = 0 ) {
         let { _imageSource: imageSource } = this
         w = w || imageSource.w
@@ -230,13 +230,13 @@ export default class Canvas {
         )
     }
 
-    vimageSource( p: Vector, dimensions: Vector ) { this.imageSource( p.x, p.y, dimensions.x, dimensions.y ); return this }
+    vimageSource( p: Vector2, dimensions: Vector2 ) { this.imageSource( p.x, p.y, dimensions.x, dimensions.y ); return this }
     imageSource( x, y, w, h ) {
         this._imageSource = { x, y, w, h }
         return this
     }
 
-    vtranslate( p: Vector ) { this.translate( p.x, p.y ); return this }
+    vtranslate( p: Vector2 ) { this.translate( p.x, p.y ); return this }
     translate( x, y ) {
         // this.context.translate( Math.round( x ), Math.round( y ) )
         this.context.translate( x, y )
@@ -244,7 +244,7 @@ export default class Canvas {
     }
 
     translateToCenter() {
-        this.vtranslate( this.dimensions.half )
+        this.vtranslate( this.dimensions.half() )
         return this
     }
 
@@ -253,7 +253,7 @@ export default class Canvas {
         return this
     }
 
-    vscale( v: Vector ) { this.scale( v.x, v.y ); return this }
+    vscale( v: Vector2 ) { this.scale( v.x, v.y ); return this }
     scale( x, y ) {
         this.context.scale( x, y )
         return this
@@ -291,7 +291,7 @@ export default class Canvas {
     }
 
 
-    vtext( text, p: Vector, width, font = "50px pixel" ) { this.text( text, p.x, p.y, width, font ); return this }
+    vtext( text, p: Vector2, width, font = "50px pixel" ) { this.text( text, p.x, p.y, width, font ); return this }
     text( text, x, y, width, font = "50px pixel" ) {
         let c = this.context
         c.font = font
@@ -322,7 +322,7 @@ export default class Canvas {
         return this
     }
 
-    vpath( points: Vector[] ) {
+    vpath( points: Vector2[] ) {
         this.context.beginPath()
         let i = 0
         for ( let p of points ) {
@@ -334,8 +334,12 @@ export default class Canvas {
         return this
     }
 
+    clip() {
+        this.context.clip()
+        return this
+    }
 
-    gradient( from: Vector, to: Vector, colors: [ number, Color | string ][] ) {
+    gradient( from: Vector2, to: Vector2, colors: [ number, Color | string ][] ) {
         let grad = this.context.createLinearGradient( from.x, from.y, to.x, to.y )
         for ( let [ percent, color ] of colors )
             grad.addColorStop( percent, color.toString() )

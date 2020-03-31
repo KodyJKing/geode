@@ -1,16 +1,16 @@
 import Sprite from "./Sprite"
-import Vector, { vector } from "../math/Vector"
+import Vector2, { vector } from "../math/Vector2"
 
 type SpriteSheetArgs = {
     image: HTMLImageElement | ImageBitmap
     frameWidth: number
     scale?: number
-    center?: Vector
+    center?: Vector2
 }
 export default class SpriteSheet {
     private image: HTMLImageElement | ImageBitmap
     private frameWidth: number
-    private _center?: Vector
+    private _center?: Vector2
     scale: number = 1
 
     constructor( options: SpriteSheetArgs ) {
@@ -25,7 +25,7 @@ export default class SpriteSheet {
         return this
     }
 
-    setCenter( center: Vector ) {
+    setCenter( center: Vector2 ) {
         this._center = center
         return this
     }
@@ -33,7 +33,7 @@ export default class SpriteSheet {
     get center() {
         if ( this._center )
             return this._center.multiply( this.scale )
-        return this.spriteDimensions.half
+        return this.spriteDimensions.half()
     }
 
     get frameCount() {

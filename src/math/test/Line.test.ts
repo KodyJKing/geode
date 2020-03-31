@@ -1,6 +1,6 @@
 import test from "ava"
 import Line from "../geometry/Line"
-import { vector } from "../Vector"
+import { vector } from "../Vector2"
 import Ray from "../geometry/Ray"
 import { connect } from "tls"
 
@@ -17,7 +17,7 @@ test( "RayTrace", assert => {
 
     let time = line.rayCast( ray )
     let point = ray.pointAt( time )
-    
+
     assert.true( time == 50 )
-    assert.true( point.equivalent( vector(50, 50) ) )
+    assert.true( point.equivalent( vector( 50, 50 ) ) )
 } )

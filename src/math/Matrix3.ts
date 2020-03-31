@@ -1,3 +1,5 @@
+import Vector2 from "./Vector2";
+
 const epsilon = 0.000001
 
 export default class Matrix3 {
@@ -25,6 +27,18 @@ export default class Matrix3 {
     inverse(): Matrix3 { return inverse( this, Matrix3 ) }
     determinant(): number { return determinant( this, Matrix3 ) }
     equals( other: Matrix3 ): boolean { return equals( this, other, epsilon, Matrix3 ) }
+
+    multiplyVec2( v: Vector2, z: number = 1 ) {
+        let {
+            m11, m12, m13,
+            m21, m22, m23,
+        } = this
+        let { x, y } = v
+        return new Vector2(
+            m11 * x + m12 * y + m13 * z,
+            m21 * x + m22 * y + m23 * z,
+        )
+    }
 
     static translation( x = 0, y = 0 ) {
         return new Matrix3(
