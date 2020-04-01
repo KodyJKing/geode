@@ -12,7 +12,7 @@ export function getAsset( path: string, fromPath: ( string ) => any ) {
 function assetPath( path: string, defaultExtension: string ) {
     if ( path.indexOf( "." ) == -1 )
         path = path + "." + defaultExtension
-    return "/assets/" + path
+    return "./assets/" + path
 }
 
 export function getImage( path: string ) {
