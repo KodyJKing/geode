@@ -288,6 +288,7 @@ export default class Canvas {
     applyMatrix( mat: Matrix3 ) {
         let { m11, m12, m13, m21, m22, m23 } = mat
         this.context.transform( m11, m21, m12, m22, m13, m23 )
+        return this
     }
 
 

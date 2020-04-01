@@ -1,33 +1,33 @@
-import * as _0 from "./assets"
-import * as _1 from "./audio"
-import * as _2 from "./Clock"
-import * as _3 from "./gameobject/Component"
-import * as _4 from "./gameobject/GameObject"
-import * as _5 from "./gameobject/Scene"
-import * as _6 from "./graphics/Animator"
-import * as _7 from "./graphics/Canvas"
-import * as _8 from "./graphics/Color"
-import * as _9 from "./graphics/Sprite"
-import * as _10 from "./graphics/SpriteSheet"
-import * as _11 from "./IGame"
-import * as _13 from "./Input"
-import * as _14 from "./math/collision/collision"
-import * as _15 from "./math/collision/GJK"
-import * as _16 from "./math/collision/GJKRaycast"
-import * as _17 from "./math/collision/IBody"
-import * as _18 from "./math/collision/SupportFunction"
-import * as _21 from "./math/geometry/BoundingBox"
-import * as _22 from "./math/geometry/IBoundingBox"
-import * as _23 from "./math/geometry/Line"
-import * as _24 from "./math/geometry/Polygon"
-import * as _25 from "./math/geometry/Ray"
-import * as _26 from "./math/GMath"
+import * as _0 from "./audio"
+import * as _1 from "./Clock"
+import * as _2 from "./gameobject/Component"
+import * as _3 from "./gameobject/GameObject"
+import * as _4 from "./gameobject/Scene"
+import * as _5 from "./graphics/Animator"
+import * as _6 from "./graphics/Canvas"
+import * as _7 from "./graphics/Color"
+import * as _8 from "./graphics/Sprite"
+import * as _9 from "./graphics/SpriteSheet"
+import * as _10 from "./IGame"
+import * as _12 from "./Input"
+import * as _13 from "./math/collision/collision"
+import * as _14 from "./math/collision/GJK"
+import * as _15 from "./math/collision/GJKRaycast"
+import * as _16 from "./math/collision/IBody"
+import * as _17 from "./math/collision/SupportFunction"
+import * as _20 from "./math/geometry/BoundingBox"
+import * as _21 from "./math/geometry/IBoundingBox"
+import * as _22 from "./math/geometry/Line"
+import * as _23 from "./math/geometry/Polygon"
+import * as _24 from "./math/geometry/Ray"
+import * as _25 from "./math/GMath"
+import * as _26 from "./math/Matrix2"
 import * as _27 from "./math/Matrix3"
-import * as _29 from "./math/Transform"
-import * as _30 from "./math/Vector3"
-import * as _31 from "./util"
-import * as _32 from "./math/Vector2"
-import * as _34 from "./math/Matrix2"
+import * as _30 from "./math/Transform"
+import * as _31 from "./math/Vector2"
+import * as _32 from "./math/Vector3"
+import * as _33 from "./util"
+import * as _34 from "./assets"
 
 export default {
     _0,
@@ -41,13 +41,13 @@ export default {
     _8,
     _9,
     _10,
-    _11,
+    _12,
     _13,
     _14,
     _15,
     _16,
     _17,
-    _18,
+    _20,
     _21,
     _22,
     _23,
@@ -55,9 +55,9 @@ export default {
     _25,
     _26,
     _27,
-    _29,
     _30,
     _31,
     _32,
+    _33,
     _34
 }
