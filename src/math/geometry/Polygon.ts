@@ -19,7 +19,7 @@ export default class Polygon {
     static regular(sides: number, radius: number) {
         let result = new Polygon([])
         for (let i = 0; i < sides; i++) {
-            let angle = GMath.TAU * i / sides + Math.PI / sides
+            let angle = GMath.TAU * i / sides + Math.PI / sides + Math.PI / 2
             result.vertices.push(
                 Vector.polar(
                     angle,

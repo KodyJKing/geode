@@ -50,24 +50,29 @@ export function collisionInfo(a: IBody, b: IBody) {
 
     let normal = line.leftNormal.unit
 
-    let epsilon = 0.1
+    let epsilon = 0.01
     let rotator = Vector.polar(epsilon, 1)
     let normalHigh = normal.complexProduct(rotator)
     let normalLow = normal.complexQuotient(rotator)
 
+    let aDisplacement = a.velocity.multiply(time)
+    let bDisplacement = b.velocity.multiply(time)
+
+    let lineOrgin = line.a
+    let lineHeading = line.heading
+    let lineRank = (pt: Vector) => pt.subtract(lineOrgin).dot(lineHeading)
+
+    let contacts = [
+        a.support(normalHigh).add(aDisplacement),
+        a.support(normalLow).add(aDisplacement),
+        b.support(normalHigh.negate).add(bDisplacement),
+        b.support(normalLow.negate).add(bDisplacement)
+    ].sort((a, b) => lineRank(a) - lineRank(b)).slice(1, 3)
+
     return {
         time,
         normal,
-        contact: {
-            a: {
-                high: a.support(normalHigh),
-                low: a.support(normalLow),
-            },
-            b: {
-                high: b.support(normalHigh.negate),
-                low: b.support(normalLow.negate),
-            }
-        }
+        contacts
     }
 
 }
