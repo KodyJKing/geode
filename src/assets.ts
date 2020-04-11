@@ -30,3 +30,15 @@ export function getAudio( path: string ) {
 export function isFontLoaded( font: string ) {
     return ( document as any ).fonts.check( "0px " + font )
 }
+
+export function getJSON( path: string ): Promise<any> {
+    path = assetPath( path, "json" )
+    let req = new XMLHttpRequest()
+    return new Promise<any>(
+        resolve => {
+            req.onload = () => resolve( JSON.parse( req.response ) )
+            req.open( "GET", path )
+            req.send()
+        }
+    )
+}

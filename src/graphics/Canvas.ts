@@ -112,12 +112,12 @@ export default class Canvas {
     }
 
     vrect( p: Vector2, dimensions: Vector2, center = false ) { this.rect( p.x, p.y, dimensions.x, dimensions.y, center ); return this }
-    rect( x, y, w, h, center = false ) {
+    rect( x, y, w, h, centerX = false, centerY = centerX ) {
         let { context: c } = this
-        if ( center ) {
+        if ( centerX )
             x -= w / 2
+        if ( centerY )
             y -= h / 2
-        }
         c.beginPath()
         c.rect( x, y, w, h )
         c.closePath()
