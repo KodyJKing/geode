@@ -132,9 +132,9 @@ function determinant3( args: string[] ) {
         a21, a22, a23,
         a31, a32, a33
     ] = args
-    return `(${a11} * ${determinant2( a22, a23, a32, a33 )} +
-    ${a12} * ${determinant2( a21, a23, a31, a33 )} +
-    ${a13} * ${determinant2( a21, a22, a31, a32 )})`
+    return `(${ a11 } * ${ determinant2( a22, a23, a32, a33 ) } -
+    ${ a12 } * ${ determinant2( a21, a23, a31, a33 ) } +
+    ${ a13 } * ${ determinant2( a21, a22, a31, a32 ) })`
 }
 
 function destructureMatrix( name: string ) {
@@ -165,7 +165,7 @@ const multiplyMatrix = ( () => {
     let body = [
         destructureA,
         destructureB,
-        `return new Matrix3(\n    ${matrixArgs}\n)`
+        `return new Matrix3(\n    ${ matrixArgs }\n)`
     ].join( "\n" )
     return new Function( "A", "B", "Matrix3", body )
 } )()
@@ -193,7 +193,7 @@ const inverse = ( () => {
     let body = [
         destructure,
         coefStatemnent,
-        `\nreturn new Matrix3(${matrixArgs})`
+        `\nreturn new Matrix3(${ matrixArgs })`
     ].join( "\n" )
     return new Function( "A", "Matrix3", body )
 } )()
@@ -205,7 +205,7 @@ const equals = ( () => {
         j => range( 3 ).map(
             i => {
                 let index = j.toString() + i.toString()
-                return `if (Math.abs(A${index} - B${index}) > epsilon) return false`
+                return `if (Math.abs(A${ index } - B${ index }) > epsilon) return false`
             }
         )
     ).flat()
