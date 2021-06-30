@@ -46,7 +46,9 @@ export default class Color {
     toString() {
         return `rgba(${this.r},${this.g},${this.b},${this.a})`
     }
+}
 
+export class Colors {
     static aliceblue = Color.parse( "#f0f8ff" )
     static antiquewhite = Color.parse( "#faebd7" )
     static aqua = Color.parse( "#00ffff" )

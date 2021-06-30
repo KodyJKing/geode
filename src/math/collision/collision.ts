@@ -55,19 +55,36 @@ export function collisionInfo( a: IBody, b: IBody ) {
     let normalHigh = normal.complexProduct( rotator )
     let normalLow = normal.complexQuotient( rotator )
 
+    let contact = {
+        a: {
+            high: a.support( normalLow ),
+            low: a.support( normalHigh ),
+        },
+        b: {
+            high: b.support( normalHigh.negate() ),
+            low: b.support( normalLow.negate() ),
+        }
+    }
+    
+    let da = a.velocity.multiply(time)
+    let db = b.velocity.multiply(time)
+
+    let aHigh = a.support( normalLow ).add(da)
+    let aLow = a.support( normalHigh ).add(da)
+    let bHigh = b.support(normalHigh.negate() ).add(db)
+    let bLow = b.support(normalLow.negate() ).add(db)
+    let aHighRank = aHigh.cross(normal)
+    let aLowRank = aLow.cross(normal)
+    let bHighRank = bHigh.cross(normal)
+    let bLowRank = bLow.cross(normal)
+
+    let high = aHighRank < bHighRank ? aHigh : bHigh
+    let low = aLowRank > bLowRank ? aLow : bLow
+
     return {
         time,
         normal,
-        contact: {
-            a: {
-                high: a.support( normalHigh ),
-                low: a.support( normalLow ),
-            },
-            b: {
-                high: b.support( normalHigh.negate() ),
-                low: b.support( normalLow.negate() ),
-            }
-        }
+        contact: [high, low],
     }
 
 }
